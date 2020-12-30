@@ -3,95 +3,155 @@ define([
 
     "esri/tasks/QueryTask",
     "esri/tasks/support/Query",
-    "esri/layers/GraphicsLayer",
-  ], function(
+    "esri/layers/GraphicsLayer"
+], function (
     Helper,
 
     QueryTask,
     Query,
-    GraphicsLayer,
-    ){
-        
-        var __url_query='';
-        var _gly_searchinlayer = new GraphicsLayer({
-            listMode:"hide",
-            title:"Busqueda en capa"
+    GraphicsLayer
+) {
+
+    var __url_query = '',
+        __filter = '',
+        __titlereport='',
+
+        _gly_searchinlayer = new GraphicsLayer({
+            listMode: "hide",
+            title: "Búsqueda en capa"
         });
-        __globspace.map.add(_gly_searchinlayer);
 
-        // Evento para inicializar busqueda
-        $('#form_searchinlayer').on('submit', function (evt) {
-            evt.preventDefault();
-            Helper.showPreloader();
-            let idsublayer=$('#txt_searchinlayer').attr('data-idlayer'),
-                titlereporte='Búsqueda en capa: \n '+$('#txt_searchinlayer').attr('data-titlereporte'),
-                aliasmil =$('#txt_searchinlayer').attr('data-aliasmil'),
-                filter=$('#txt_searchinlayer').val().trim().toUpperCase();
+    __globspace.map.add(_gly_searchinlayer);
 
-                aux_sector = __globspace.infolayers.find( sublayer => sublayer.alias == aliasmil),
-                sublayer=aux_sector.layers.find( sublayer => sublayer.id == idsublayer),
-            
-                sql='',
-                outFields='',
-                fields=sublayer.popupTemplate.fieldInfos;
-                nfields=fields.length,
-                aux_fields=[];
+    // Evento para inicializar busqueda
+    $('#wg_searchinlayer').on('submit', '#form_searchinlayer', function (evt) {
+        evt.preventDefault();
+        Helper.showPreloader();
 
-            for (let i = 0; i < nfields; i++) {
-                let field = fields[i];
-                sql +=`Upper(${field.fieldName}) like '%${filter}%' or `;
-                outFields +=`,${field.fieldName}`;
-                aux_fields.push({'fieldname':field.fieldName, 'fieldlabel':field.label});
+        let requiere = [
+            {
+              idfiel: 'txt_searchinlayer',
+              label: 'Campo'
             }
-            
-            sql=sql.trim();
-            let lengthsql= sql.lastIndexOf(' ');
-            sql=sql.substring(lengthsql,-1);
-            
-            __url_query=sublayer.url;
-            _queryt = new QueryTask({url:__url_query});
-            
-            let _qparams = new Query();
-            _qparams.where = sql;
-            _qparams.returnGeometry = true;
-            _qparams.outFields = `${outFields}`;
-            _queryt.execute(_qparams).then(function(response){
-                let nreg = response.features.length;
-                if(nreg==0){
-                    alertMessage("La consulta no tiene registros a mostrar", "warning", '', true)
-                    Helper.hidePreloader();
-                }else{
-                    if(nreg>=1000){
-                        alertMessage('El resultado supera el límite de registros a mostrar, por lo tanto solo se muestra los primeros 1000 registros.','warning', 'bottom-right');
-                    }
-                    Helper.loadTable(response, aux_fields, titlereporte, '#tbl_searchinlayer', false);
-                    Helper.renderToZoom(response, _gly_searchinlayer);
-                }
-            }).catch(function (error) {
-                Helper.hidePreloader();
-                console.log("query task error", error);
-            });
-        });
+        ];
 
-        // zoom individual
-        $('#container_tblsearchinlayer').on('click', '.tdzoom', function(){
-            $('.tbl-result tr.active').removeClass('active');
-            $(this).parent().toggleClass('active ');
-            
-            let objectid=$(this).attr('id');
-            let namefield = $(this).attr('data-namefield');
-            let sql = `${ namefield } = ${ objectid }`;
-            Helper.paintToZoom(sql, __url_query, _gly_searchinlayer);
-        })
-
-        $('#btn_clearsearchinlayer').on('click', function(){
+        if(Helper.getValidationForm('form_searchinlayer', requiere)){
             Helper.hideGrid();
-            __url_query='';
-            _gly_searchinlayer.removeAll();
-            $('#txt_searchinlayer').val('');
-        })
+    
+            let dataforsearch = __globspace.sublayersearch,
+                sublayer = dataforsearch.sublayer;
+                
+            __filter = $('#txt_searchinlayer').val().trim().toUpperCase();
+            __titlereport = 'Búsqueda en capa: \n ' + dataforsearch.titlereport; //title del reporte para el exportar
+            __url_query = sublayer.url;
+            getQuery();
+        }
+    });
 
-        $("#btnswitch_2d3d").on('change',function(){
-            __globspace.currentview.map.add(_gly_searchinlayer);
+    //Evento lanzado para hacer zoom a cada registro de la tabla resultado
+    $('#container_tblsearchinlayer').on('click', '.tdzoom', function () {
+        $('.tbl-result tr.active').removeClass('active');
+        $(this).parent().toggleClass('active ');
+
+        let objectid = $(this).attr('id');
+        let namefield = $(this).attr('data-namefield');
+        let sql = `${ namefield } = ${ objectid }`;
+
+        Helper.paintToZoom(sql, __url_query, _gly_searchinlayer);
+    });
+
+    // Evento lanzado para limpiar toda la operación
+    $('#wg_searchinlayer').on('click', '#btn_clearsearchinlayer', function () {
+        Helper.hideGrid();
+        __url_query = '';
+        __filter = '';
+        __titlereport='';
+        __outfields='';
+        _gly_searchinlayer.removeAll();
+        $('#txt_searchinlayer').val('');
+
+        $('.form-group').removeClass('error');
+        $('.form-group span.lbl-error').remove();
+
+    });
+
+    // FUNCIONES
+
+    function getQuery(){
+        _gly_searchinlayer.removeAll();
+        
+        let _queryt = new QueryTask({ url: __url_query }),
+        _qparams = new Query();
+
+        _qparams.where = '1<>1';
+        _qparams.outFields = ['*'];
+        _qparams.returnGeometry = false;
+        _queryt.execute(_qparams).then(function (response) {
+            let fields = response.fields,
+                auxlength = fields.length,
+                sql = '';
+
+            for (let i = 0; i < auxlength; i++) {
+                let field = fields[i],
+                    typedata = field.type;
+                
+                switch (typedata) {
+                    case 'double': case 'small-integer': case 'integer': case 'oid': case 'single':
+                        if(!isNaN(parseFloat(__filter))){
+                            sql += `${ field.name } = "${ __filter }" or `;
+                        }
+                        break;
+                    case 'date':
+                        let isformatdate = moment(__filter, 'YYYY-MM-DD', true).isValid();
+                        if(isformatdate){
+                            let fi = moment(__filter).add(5, 'hours').format('YYYY-MM-DD HH:mm:ss');  //consulta al servicio en hora utc (+5);
+                            let ff = moment(__filter).add(29, 'hours').subtract(1, 'seconds').format('YYYY-MM-DD HH:mm:ss');
+                            auxsql = `(${ field.name } BETWEEN timestamp '${ fi }' AND timestamp '${ ff }')`;
+                        }
+                        break;
+                    default:
+                        sql += `Upper(${ field.name }) like '%${ __filter }%' or `;
+                        break;
+                }
+            }
+
+            sql = sql.trim();
+            let lengthsql = sql.lastIndexOf(' ');
+            sql = sql.substring(lengthsql, -1);
+
+            // obtener la data de la consulta
+            let _queryt2 = new QueryTask({ url: __url_query }),
+                _qparams2 = new Query();
+                
+            _qparams2.where = sql;
+            _qparams2.returnGeometry = true;
+            _qparams2.outFields = ['*'];
+            return _queryt2.execute(_qparams2);
         })
-})
+        .then(function(response){
+            let nreg = response.features.length;
+            let fields = response.fields;
+            if (nreg == 0) {
+                alertMessage("La consulta no tiene registros a mostrar", "warning", 'top-center', true)
+                Helper.hidePreloader();
+                
+            } else {
+                Helper.loadTable(response, fields, __titlereport, '#tbl_searchinlayer', false);
+                Helper.renderToZoom(response, _gly_searchinlayer);
+                
+                if (nreg >= 1000) {
+                    alertMessage('El resultado supera el límite de registros a mostrar, por lo tanto solo se muestra los primeros 1000 registros.', 'warning', 'top-center', true);
+                }
+            }
+        })
+        .catch(function (error) {
+            Helper.hidePreloader();
+            console.log("query task error: "+ error);
+        });
+    }
+
+});
+
+/**
+ * REVISADO PALOMINO 
+ */

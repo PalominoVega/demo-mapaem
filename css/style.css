@@ -410,3 +410,13 @@ input[type=range]::-ms-fill-upper {
 .container-btnminimizadosresult .min-size {
     bottom: var(--height-grilla);
 }
+
+/* VALIDACIONES */
+.error select,
+.error input{
+    border: 1px solid red;
+}
+.error .lbl-error{
+    color: red;
+    font-size: 13px;
+}

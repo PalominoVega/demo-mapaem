@@ -470,7 +470,7 @@ define([
         fields = response.fields,
         idtable = `#tbl_${aux_idtable}`;
 
-      Helper.loadTable2(response, fields, titlelayer, idtable, isexportable);
+      Helper.loadTable(response, fields, titlelayer, idtable, isexportable);
       // Helper.renderGraphic(response, _gly_searchbuffer);
       Helper.renderToZoomBuffer(response, _gly_searchbuffer, __buffergeometry);
       

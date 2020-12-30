@@ -17,7 +17,6 @@ define([
     // esriConfig.request.proxyUrl = "https://proxyphp.herokuapp.com/proxy.php"; //oficial
     esriConfig.request.proxyUrl = "./proxy_php/proxy.php"; 
     
-    var url = 'palomino';
 
     var url_electricidad='https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/ELECTRICIDAD/MapServer';
     var url_gasnatural='https://gisem.osinergmin.gob.pe/serverosih/rest/services/Gas_Natural/GAS_NATURAL/MapServer';

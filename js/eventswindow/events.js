@@ -36,3 +36,4 @@ $('#div_btnmaximizadores').on('click', '#btn_maxlegend', function () {
     $('#div_btnmaximizadores').hide(400);
     $('#wg_leyend').show(400);
 })
+

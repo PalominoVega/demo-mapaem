@@ -20,7 +20,7 @@ define([
         __layers=[], //capa=[{titlelayers:titulo_capas, service: url_servicio, fields: campos({fieldname, fieldlabel})}],
         __url_query='',
         __fields=[],
-        __query=[], 
+        __query=[],
         __queryindex=0,
         __titlelayer='',    
 
@@ -357,6 +357,7 @@ define([
 
                 _queryt2.execute(_qparams2).then(function(response){
                     let nreg = response.features.length;
+                    let fields = response.fields;
                     if(nreg==0){
                         alertMessage("La consulta no tiene registros a mostrar", "warning",'', true)
                         Helper.hidePreloader();
@@ -364,7 +365,7 @@ define([
                         if(nreg>=1000){
                             alertMessage('El resultado supera el límite, por ello solo se muestra los primeros 1000 registros. \n Para mejorar su consulta, ingrese más filtros.','warning', 'bottom-right');
                         }
-                        Helper.loadTable(response, __fields, __titlelayer, idtable, isexportable);
+                        Helper.loadTable(response, fields, __titlelayer, idtable, isexportable);
                         Helper.renderToZoom(response, _gly_searchadvanced);
 
                         if(Object.keys(_gra_ubigeo).length ==0){
@@ -393,6 +394,7 @@ define([
 
             _queryt.execute(_qparams).then(function(response){
                 let nreg = response.features.length;
+                let fields = response.fields;
                 if(nreg==0){
                     alertMessage("La consulta no tiene registros a mostrar", "warning", '', true);
                     Helper.hidePreloader();
@@ -400,7 +402,7 @@ define([
                     if(nreg>=1000){
                         alertMessage('El resultado supera el límite, por ello solo se muestra los primeros 1000 registros. \n Para mejorar su consulta, ingrese más filtros.','warning', 'bottom-right');
                     }
-                    Helper.loadTable(response, __fields, __titlelayer, idtable, isexportable);
+                    Helper.loadTable(response, fields, __titlelayer, idtable, isexportable);
                     Helper.renderToZoom(response, _gly_searchadvanced);
                 }
             }).catch(function (error) {

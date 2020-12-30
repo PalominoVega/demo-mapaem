@@ -471,23 +471,32 @@ define([
       $(".grilla").removeClass('min-size').addClass('max-size');
       
       $('#txt_searchinlayer').val('');
-      $('#div_cardsearchinlayer').removeClass('notvisible').addClass('visible');
-
-      let result=[], padres='', hasparent=true ; 
-      let parents =getParentsLayerlist(itemlayer, hasparent, padres, result);
+      // $('#txt_searchinlayer').attr({'data-idlayer':idlayer, 'data-uid':event.item.uid, 'data-aliasmil':`${aliasmil}`, 'data-titlereporte':`${sector} / ${grupo} / ${capas.substring(2)}`});
+      $('#wg_searchinlayer').removeClass('notvisible').addClass('visible');
+      let result = [],
+        padres = '',
+        hasparent = true;
+      let parents = getParentsLayerlist(itemlayer, hasparent, padres, result);
       let aux_parents = parents[0].title.substring(1).split('?');
-      let sector=aux_parents[aux_parents.length-1];
-      let grupo=aux_parents[aux_parents.length-2];
-      let aliasmil=itemlayer.alias_sector;
-      let capas='';
-      for (let i = aux_parents.length-3; i>=0 ; i--) {
-        capas +=' / ' + aux_parents[i];
+      let nparents = aux_parents.length;
+      let sector = aux_parents[nparents - 1];
+      let grupo = aux_parents[nparents - 2];
+      let capas = '';
+      for (let i = nparents - 3; i >= 0; i--) {
+        capas += ' / ' + aux_parents[i];
       }
+      
       $('#lbl_sector').text(sector);
       $('#lbl_group').text(grupo);
       $('#lbl_leyer').text(capas.substring(2));
 
-      $('#txt_searchinlayer').attr({'data-idlayer':idlayer, 'data-uid':event.item.uid, 'data-aliasmil':`${aliasmil}`, 'data-titlereporte':`${sector} / ${grupo} / ${capas.substring(2)}`});
+      let titlereport = `${sector} / ${ grupo } / ${capas.substring(2)}`;
+      let data = {
+        'sublayer': itemlayer,
+        'titlereport': titlereport
+      };
+
+      __globspace.sublayersearch = data;
     }
   }
 

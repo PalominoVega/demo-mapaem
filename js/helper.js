@@ -16,105 +16,6 @@ define([
     var __arr_fieldhide = [];
 
     function loadTable(response, fields, titlereporte, idtable, isexportable) {
-        __idgrilla='#'+$(idtable).parents('.grilla').attr('id');
-        __idtable=idtable;
-        $('#div_results .grilla').addClass('notvisible');
-        hideGrid();
-        let data = response.features,
-            nreg = data.length,
-            tbody= '',
-            nfieldresponse='0',
-            nfield =fields.length,
-            theader='',
-            aux_theader='<th>#</th>',
-            columnstoexportar=[];
-        
-        nreg!=0 ? nfieldresponse =Object.keys(data[0].attributes).length : '';
-        
-        // limpiar tabla
-        let rowcount = $(`${__idtable} > tbody tr`).length;
-        if (rowcount > 0) {
-            $(__idtable).DataTable().clear();
-            $(__idtable).DataTable().destroy();
-            $(`${__idtable} > thead`).html('');
-            $(`${__idtable} > tbody`).html('');
-        }
-        
-        // armar cabecera theader
-        columnstoexportar.push(0);
-        for (let j = 0; j < nfield; j++) {
-            if(fields[j].fieldlabel=='OBJECTID'){
-                aux_theader +=`<th class='not-export'>Zoom</th>`;
-            }else{
-                aux_theader +=`<th>${fields[j].fieldlabel}</th>`;
-            }
-            j==0 ? '' : columnstoexportar.push(j+1);
-        }
-        theader =`<tr>${aux_theader}</tr>`;
-
-        if(nreg!=0 && nfieldresponse!=0){
-            /**
-             * armar cuerpo tbody
-             *falta alineacion de campos (string y numeros) y convertirlos 
-            */
-            for (let i = 0; i < nreg; i++) {
-                let row=data[i].attributes;
-                let aux_tbody='<td></td>';
-                for (let j = 0; j < nfield; j++) {
-                    let item=row[fields[j].fieldname];
-                    if(item==undefined){
-                        aux_tbody += `<td> </td>`;
-                    }else{
-                        let regexdate = /^\d{1,2}\/\d{1,2}\/\d{2,4}\s\d{1,2}:\d{1,2}:\d{1,2}\s(AM|am|PM|pm|A.M.|a.m.|P.M.|p.m.)$/;
-                        let regexnumero=/^\d+(\.\d)?$/;
-                        if(regexdate.test(item)){
-                            item = item.substring(0,11);
-                        };
-                        if(fields[j].fieldname=='OBJECTID'){
-                            aux_tbody += `<td class='tdzoom not-export' id="${item} "><span class='esri-icon-zoom-in-magnifying-glass' ></span></td>`;
-                        }else{
-                            aux_tbody += `<td>${item} </td>`;
-                        }
-                    }
-                }
-                tbody +=`<tr>${aux_tbody}</tr>`;
-            }
-        }else{
-            isexportable=false;
-        }
-        // luego llenar tabla con nueva data
-        $(`${__idtable} > thead`).html(theader);
-        $(`${__idtable} > tbody`).html(tbody);
-        $(`${__idgrilla} .lbl-titlereporte`).text(titlereporte);
-        // mostrar tabla
-        showGrid();
-        if($('#div_results .grilla').hasClass('max-size')){
-            $('#div_results .grilla').removeClass('max-size').addClass('min-size');
-        }
-
-        // obtengo el tamaño para tbody del datatable 
-        let heightgrilla = $(__idgrilla).outerHeight();
-        let heightgrillaheader = $(__idgrilla+' .card-header-gis').outerHeight();
-        let heighttabsbuffer = $(__idgrilla+' .jcarousel').outerHeight();
-        let heightdtheader = 38; // altura del header del datatable
-        let heightdtfooter=37; // altura del footer del datatble 
-        heightgrillaheader<28 ? heightgrillaheader=34: '';
-        typeof heighttabsbuffer === 'undefined' ? heighttabsbuffer=0: '';
-
-        let lengthscrolly= heightgrilla - (heightgrillaheader + heightdtheader + heightdtfooter + heighttabsbuffer);
-        // formateo con datatable
-        let table='';
-        if(isexportable){
-            table=getDataTableExport(titlereporte,lengthscrolly);
-        }else{
-            table=getDataTable(lengthscrolly);
-        }
-        table.columns.adjust().draw();
-        __datatable=table;
-        hidePreloader();
-    }
-   
-    function loadTable2(response, fields, titlereporte, idtable, isexportable) {
         __idgrilla = '#' + $(idtable).parents('.grilla').attr('id');
         __idtable = idtable;
         $('#div_results .grilla').addClass('notvisible');
@@ -250,7 +151,7 @@ define([
         if (isexportable) {
             table = getDataTableExport(titlereporte, lengthscrolly);
         } else {
-            table = getDataTableNotExport(lengthscrolly);
+            table = getDataTable(lengthscrolly);
         }
 
         setTimeout(function(){ table.columns.adjust().draw(); },500);
@@ -676,6 +577,39 @@ define([
         return fecha;
     }
 
+    function getValidationForm(form, requiere){
+        let $form = $(`#${ form }`);
+        let auxlength = requiere.length;
+
+        let v_continue = true;
+        let counterror = 0;
+        $('.form-group', $form).removeClass('error');
+        $('.form-group span.lbl-error', $form).remove();
+
+        for (let i = 0; i < auxlength; i++) {
+            const idfiel = requiere[i].idfiel;
+            const label = requiere[i].label;
+
+            if ($(`#${ idfiel }`).val().trim() === '') {
+                $(`#${ idfiel }`).parent().addClass('error').append(`<span class=lbl-error> ${ label } obligatorio</span>`);
+                $(`#${ idfiel }`).val('');
+                counterror++;
+            }
+
+        }
+
+        $('.error input:first', $form).focus();
+        $('.error select:first', $form).focus();
+
+        if (counterror != 0) {
+            v_continue = false;
+            hidePreloader();
+        }
+        return v_continue;
+    }
+
+
+
     // funciones html
     function showGrid() {
         $(__idgrilla).addClass('visible').removeClass('notvisible');
@@ -693,7 +627,6 @@ define([
 
     return {
         loadTable: function(response, queryfields,titlereporte, url_servicio, isexportable){return loadTable(response, queryfields, titlereporte, url_servicio, isexportable); },
-        loadTable2: function(response, queryfields,titlereporte, url_servicio, isexportable){return loadTable2(response, queryfields, titlereporte, url_servicio, isexportable); },
         renderToZoom: function(response,_gly_search){return renderToZoom(response, _gly_search);},
         renderGraphic: function(response,_gly_search){return renderGraphic(response, _gly_search);},
         renderToZoomBuffer: function(response,_gly_search, geometrybuffer){return renderToZoomBuffer(response, _gly_search, geometrybuffer);},
@@ -705,6 +638,10 @@ define([
 
         createTooltipInstructions:  function () { return createTooltipInstructions(); },
         hideTooltipInstructions:  function () { return hideTooltipInstructions(); },
+
+        getValidationForm: function (form, requiere) {
+            return getValidationForm(form, requiere);
+        }
     }
     
   });

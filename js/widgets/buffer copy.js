@@ -365,6 +365,7 @@ define([
       _qparams.where = '1=1';
       _queryt.execute(_qparams).then(function(response){
         let nreg = response.features.length;
+        let fields = response.fields;
         let isexportable=true;
         let idtable=`#tbl_${aux_idtable}`;
         Helper.loadTable(response, fields, titlelayer, idtable, isexportable);
