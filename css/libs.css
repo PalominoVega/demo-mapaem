@@ -1,0 +1,468 @@
+:focus {
+    outline: none !important;
+}
+
+/*************ESRI ****************/
+.esri-view .esri-view-surface:focus::after{
+    outline: 0;
+}
+
+/* layerlist */
+.esri-layer-list{
+    background-color: white ;
+    padding: 0 ;
+    max-height: 420px;
+}
+.esri-layer-list__item.esri-layer-list__item--has-children{
+    border-bottom: none;
+}
+.esri-layer-list__item .esri-layer-list__item-container {
+    padding: 4px 7px 1px 20px;
+}
+.esri-layer-list__item-title {
+    font-weight: 500;
+    color: #000;
+    cursor: pointer;
+}   
+.esri-layer-list__item--has-children > .esri-layer-list__list {
+    font-size: 13px;
+}
+/* btns de accion */
+.esri-layer-list__item-actions{
+    position: absolute;
+    top: 0px;
+    left: calc(100% - 44px);
+    margin: 0px;
+    width: auto;
+    background-color: white;
+    display: block !important;
+}
+.esri-layer-list__item-actions-list {
+    flex-flow: inherit;
+    padding: 3px 0px;
+}
+.esri-layer-list__item-actions[hidden] .esri-layer-list__item-action {
+    opacity: 1;
+}
+.esri-layer-list__item-action{
+    border: none;
+    padding: 0px 3px;
+}
+.esri-layer-list__item-action .esri-layer-list__item-action-title{
+    display: none;
+}
+.esri-layer-list__item-actions-menu-item{
+    margin: 0px 3px;
+    padding: 0px;
+}
+.esri-layer-list__item-actions-menu-item.esri-layer-list__item-actions-menu-item--active{
+    background-color: #e2f1fb;
+    border-radius: 50%;
+    border: 1px solid #c7e9ff;
+}
+.esri-layer-list__item-actions-menu-item .esri-icon-handle-horizontal{
+    margin: 0px 10px ;
+}
+/* cambio de icono de esri x font-icon */
+.card-layer.card-top-let [class*="esri-icon"]{
+    font-family: 'icomoon' !important;
+    speak: never;
+}
+.card-layer.card-top-let .esri-layer-list__child-toggle-icon--opened.esri-icon-down-arrow::before{
+    content: "\f0da" !important;
+}
+.card-layer.card-top-let .esri-layer-list__child-toggle-icon--closed.esri-icon-right-triangle-arrow::before{
+    content: "\f0d7" !important;
+}
+.card-layer.card-top-let .esri-icon-non-visible::before {
+    content: "\e909" !important;
+}
+.card-layer.card-top-let .esri-icon-visible::before {
+    content: "\e908" !important;
+    color: #0075ff !important;
+}
+.card-layer.card-top-let .esri-icon-environment-settings::before{
+    content: "\e900" !important;
+}
+.card-layer.card-top-let .esri-icon-layer-list::before{
+    content: "\e905" !important;
+}
+.card-layer.card-top-let .esri-icon-handle-horizontal::before{
+    content: "\f078" !important;
+}
+.card-layer.card-top-let .esri-icon-search::before{
+    content: "\e90a" !important;
+}
+/* panel de la leyenda */
+.esri-layer-list-panel{
+    margin: 2px 35px;
+}
+
+/* oculta widget por defecto (zoom, navagacion3d, brujula3d)*/
+.esri-ui-corner .esri-component.esri-zoom,
+.esri-ui-corner .esri-component.esri-navigation-toggle,
+.esri-ui-corner .esri-component.esri-compass{
+    display: none;
+} 
+
+/* esri-widget--button */
+.esri-widget--button{
+    color:#fff;
+    border-radius: 20px;
+    background-color: var(--osinerg-primary);
+    border: 1px solid white;
+}
+
+/* input search*/
+.esri-input.esri-search__input{
+    border-radius: 6rem;
+}
+
+/*  pop up  */
+.esri-ui .esri-popup, .esri-popup__main-container, 
+.esri-popup__header .esri-popup__header-buttons{
+    border-radius: 10px;
+} 
+.esri-popup__header{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: var(--osinerg-primary);
+    color: white;
+}
+.esri-popup__header-buttons, 
+.esri-popup__header-buttons .esri-popup__button{
+    color: white;
+}
+.esri-popup__header-buttons .esri-popup__button:hover, 
+.esri-popup__grilla-header-title:hover{
+    background-color: var(--osinerg-primary-transparente);
+}
+
+.esri-popup__header-title:hover{
+    background-color: var(--osinerg-primary-transparente);
+}
+/* printer */
+.esri-print__container > div{
+    border: 1px solid;
+    padding: 10px;
+}
+.esri-print__layout-tab-list{
+    display: none;
+}
+.esri-print__layout-section{
+    border-top: 0px;
+    padding: 0px;
+}
+.esri-print label{
+    width: 100%;
+}
+
+/* dibujar */
+.esri-sketch__button{
+    background-color:var(--osinerg-primary);
+    border: 1px solid #D3D3D3;
+    color: #fff;
+    margin: 0px 2px;
+}
+.esri-sketch__button:hover{
+    background-color: white;
+    color: black;
+    border: 1px solid var(--osinerg-primary);
+}
+.esri-sketch__button:disabled:hover {
+    color: rgba(0,0,0,0.5)
+}
+.esri-sketch__button:disabled {
+    color: rgba(255,255,255,0.68);
+}
+/* medir */
+.esri-distance-measurement-2d__container, 
+.esri-area-measurement-2d__container,
+.esri-direct-line-measurement-3d__container,
+.esri-area-measurement-3d__container{
+    padding-bottom: 0;
+    max-width: fit-content;
+}
+
+/* 3d navegacion  */
+.esri-widget--button.esri-navigation-toggle__button--active{
+    background-color: #ced4da !important;
+    color: black !important;
+    margin: 3px 0px !important;
+}
+.modo3d .esri-widget--button{
+    font-size: 20px;
+}
+
+/*************DataTable ****************/
+.txt-dt-filtar{
+    height: calc(1.525rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    display: inline-block;
+    margin-right: 10px;
+}
+.txt-dt-filtar.notvisible{
+    display: none;
+}
+
+/* botones exportar */
+.container-dtbtns-dtfilter .dt-buttons {
+    white-space: nowrap;
+    flex-wrap: nowrap !important;
+}
+.dt-buttons {
+    vertical-align: inherit;
+}
+.dt-buttons .buttons-html5,
+.dt-buttons .btn-group .buttons-colvis{
+    padding: 3px 5px;
+    width: auto;
+    line-height: 1.2;
+    margin: 0px 3px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.dt-buttons .btn-secondary{
+    color: rgb(50, 50, 50);
+}
+.icon-file-excel-o:before {
+    color: green;
+}
+.icon-file-pdf-o:before {
+    color: red;
+}
+/* btn colvis  */
+.dt-button-collection {
+    left: auto !important;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid rgba(0,0,0,.5);
+    border-radius: .25rem;
+    padding: 0.5em 0px;
+    right: 0px;
+}
+.dt-button-collection .dt-button.buttons-columnVisibility:hover{
+    color: black;
+    background-color: white;
+}
+div.dt-button-collection div.dropdown-menu{
+    position: initial;
+    border: none;
+    border-radius: 0px;
+    padding: 0px;
+    text-transform: none;
+}
+.dt-button-background{
+    position: absolute !important;
+    right: 0 !important;
+    width: 212px !important;
+    left: auto !important;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 7px;
+}
+/* footer grilla */
+.dt-footer{
+    display: flex;
+    justify-content: space-between;
+    background-color: #e8e8e8;
+    padding: 0px 10px;
+}
+.dt-footer label{
+    margin-bottom: 0px;
+}
+.dt-info{
+    font-size: 14px;
+}
+div.dataTables_wrapper div.dataTables_info{
+    padding-top: 0.5em;
+} 
+.dataTables_info, 
+.dataTables_paginate,
+.dataTables_length{
+    display: inline-block;
+    margin-left: 10px;
+}
+.page-link{
+    background-color: #e8e8e8;
+    color: black;
+}
+/*table*/
+table.dataTable{
+    margin: 0px !important;
+}
+table.dataTable tbody th, 
+table.dataTable tbody td {
+    padding: 4px 5px!important;
+}
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before{
+    bottom: 0.4em;
+}
+.dataTables_empty{
+    display: table-cell !important;
+    text-align: left !important;
+}
+
+/*************Boostrap ****************/
+.dropdown-menu{
+    min-width: auto;
+}
+.dropdown-menu .dropdown-item:focus, 
+.dropdown-menu .dropdown-item:hover {
+    color: white ;
+    text-decoration: none;
+    background-color: transparent;
+}
+.dropdown-menu .dropdown-item.active, 
+.dropdown-menu .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: var(--osinerg-primary);
+}
+.dropdown-menu li{
+    padding-left: 8px;
+}
+
+/* menu main lateral */
+.menu-main li:hover > ul.dropdown-menu {
+    display: block;
+}
+.menu-main .dropdown{
+    background-color: var(--osinerg-primary);
+    color: white; 
+    font-size: 13px;
+}
+.menu-main .dropdown .dropdown-menu{
+    background-color: var(--osinerg-primary);
+    border:0px solid white ;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding: 4px 0px;
+    padding-right: 10px;
+    transform: translate3d(2px, 0px, 0px) !important;
+    left: auto !important;
+    right: 100% !important;
+    top: 0px;
+}
+.menu-main .dropdown .dropdown-menu li{
+    margin: 0px;
+}
+.menu-main .dropdown .dropdown-menu li img{
+    width:22px ;
+}
+.menu-main .dropdown .dropdown-menu .dropdown-item{
+    padding: .25rem 0.5rem;
+    color: white;
+}
+.item-sectormenu .dropdown-item{
+    display: inline-block;
+    width: calc( 100% - 20px);
+}
+
+/* nav */
+.nav-tabs .nav-item{
+    border-right: 1px solid var(--osinerg-primary);
+    width: auto !important;
+}
+.nav-link {
+    display: block;
+    padding: .1rem .5rem;
+    font-size:13px ;
+    border-radius: 0 !important;
+}
+.nav-tabs .nav-item.show .nav-link, 
+.nav-tabs .nav-link.active {
+    color: white;
+    background-color:var(--osinerg-primary);
+    border: none;
+    border-top: 1px solid var(--osinerg-primary-transparente);
+}
+
+/* btns */
+.btn-outline-primary{
+    border-color: var(--osinerg-primary) ;
+    color: var(--osinerg-primary);
+}
+.btn.btn-outline-primary:hover,
+.btn.btn-outline-primary:focus,
+.btn.btn-outline-primary:not(:disabled):not(.disabled):active{
+    background-color: var(--osinerg-primary);
+    border-color: var(--osinerg-primary);
+    box-shadow: none;
+    color: white;
+}
+.btn.btn-outline-secondary:hover,
+.btn.btn-outline-secondary:focus,
+.btn.btn-outline-secondary:not(:disabled):not(.disabled):active{
+    box-shadow: none;
+}
+.btn-primary{
+    background-color: var(--osinerg-primary);
+    border-color: var(--osinerg-primary);
+}
+.btn-primary.focus,.btn-primary:hover, .btn-primary:active {
+    color: #fff;
+    background-color: var(--osinerg-primary);
+    border-color: var(--osinerg-primary);
+}
+
+/*************Dijit****************/
+/** Menu de Contexto (right click) **/
+.dijitMenuPopup{
+	border-radius: 5px !important;
+	padding: 5px 0px !important;
+	background-color: white !important;
+}
+.dijitMenuPopup .dijitMenuItem{
+	height: 2em !important;
+}
+.dijitMenuPassive .dijitMenuItemHover, .dijitMenuItemSelected {
+    background-color: #005aa0ed !important;
+    color: white !important;
+}
+.dijitMenuItemIconCell{
+	padding-left: 8px !important;
+}
+.dijitMenuItemLabel{
+	padding: 0 8px !important;
+}
+
+/* combinado */
+/* luminosidad */
+.dropright.show .esri-widget--button{
+    background-color: #ced4da !important ;
+    color: black !important;
+    border: 1px solid white;
+}
+.dropdown-toggle.esri-widget--button::after {
+    content: none;
+}
+.modo3d .dropdown-menu{
+    width: 250px;
+    font-size: 14px;
+    padding: 0px;
+    border: none;
+    cursor: default;
+    top: -3px !important;
+    left: 20px !important;
+}
+.modo3d .dropdown-menu .card .card-body{
+    padding: 2px 8px;   
+}
+.modo3d .esri-navigation-toggle.esri-widget{
+    background-color: transparent;
+}

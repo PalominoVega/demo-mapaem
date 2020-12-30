@@ -1,0 +1,559 @@
+/* card */
+.card{
+    position: absolute!important;
+    padding: 0;
+    background-color: white;
+}
+.card-sm{
+    max-width: 340px;
+    max-height: 450px;
+}
+.card-top-let{
+    left: 70px;
+    top: 188px;
+}
+.card-top-right{
+    left: calc(100% - 400px);
+    top: 100px;
+}
+.card-top-center{
+    top: 103px;
+    left: 40%;
+}
+.draggable-element .card-header-gis{
+    cursor: move;
+}
+.card-header-gis{
+    text-transform: uppercase;
+    font-size: 12px;
+    background-color:#075daa;
+    color:white;
+    padding: .25rem;
+    margin-bottom: 0px;
+}
+.card-header-gis img{
+    width: 1.15em;
+    margin: 2px;
+}
+.card.display-flex .card-body{
+    overflow-y: auto;
+}
+
+/* mapabase */
+#container_basemap{
+    height:240px; 
+    overflow-y: auto;
+}
+.basemap{
+    top: 35%;
+    right: 60px;
+    left: auto;
+}
+
+/* prevnext */
+#div_navegation .disabled{
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* search */
+.card-directionsearch{
+    top: 80px;
+    left: 70px;
+}
+.card-directionsearch, .card-directionsearch div{
+    border-radius: 6px;
+}
+
+/* dibujar */
+.wg-sketch{
+    display: inline-block;
+}
+#container_draw .btn-dibujar{
+    vertical-align: top;
+    margin-top: 6px;
+}
+.btn-dibujar {
+    font-size: 16px;
+    background-color: var(--osinerg-primary);
+    border: 1px solid #D3D3D3;
+    color: #fff;
+    height: 32px;
+    width: 32px;
+    text-align: center;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+.btn-dibujar.active{
+    border-radius: 3px;
+    background: #4c4c4c;
+}
+.btn-dibujar:hover{
+    background-color: white;
+    color: black;
+    border: 1px solid var(--osinerg-primary);
+}
+
+/* medir */
+.container-btnmedir2d{
+    display: inline-block;
+}
+.btn-medir{
+    font-size: 16px;
+    background-color: var(--osinerg-primary);
+    border: 1px solid #D3D3D3;
+    color: #fff;
+    height: 32px;
+    width: 50px;
+    text-align: center;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+    margin-right: 3px;
+}
+.btn-medir3d.active,
+.btn-medir2d.active{
+    border: 2px solid black;
+    border-radius: 4px;
+    background: #4c4c4c;
+}
+
+/* coordenadas */
+.container-coordenadas{
+    z-index: 1;
+    height: 20px;
+    background-color: rgba(0, 46, 103, 0.5);    
+    position: absolute;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 11px;
+    color: white;
+    padding: 2px 0px;
+    bottom: 17px;
+    left: 0; 
+}
+.container-coordenadas .scale{
+    padding: 0px 10px;
+}
+.container-coordenadas .coordenadas{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding: 2px 0px;
+}
+
+/*buscar XY*/
+.lbl-coodxy{
+    font-weight: bold;
+    font-size: 14px;
+}
+.text-coordxy{
+    font-family: Avenir Next W00;
+    font-size: 1em;
+}
+
+/* buffer */
+.card-body-buffer{
+    font-size: 13px;
+}
+.nav-link.notvisible {
+    display: none;
+}
+
+/* busqueda en capa*/
+.lbl-searchinlayer{
+    display: block;
+    font-size: 14px;
+}
+
+/* busqueda avanzada*/
+.card-consulta{
+    top: 80px;
+    left: 40%;
+    max-width: 380px;
+    max-height: 450px;
+}
+.consulta-body{
+    border: 1px solid black;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.consulta-body label{
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: .2rem;
+}
+.consulta-body .form-group{
+    margin-bottom: 0.8rem;
+}
+.btn-addfilter{
+    position: absolute;
+    bottom: 0px;
+}
+.consulta-footer{
+    border: 1px solid black;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    margin-right: 0px;
+    margin-left: 0px;
+    font-size: 14px;
+}
+fieldset {
+    border: 1px solid black;
+    padding: 0px 14px 14px 14px;
+}
+legend{
+    padding: 0px 8px;
+    font-size: 14px;
+    width: auto;
+    margin: 0;
+}
+.container-tbl-filter{
+    min-height: 40px;
+    border: 1px solid #ced4da;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+.tbl-filter tbody{
+    white-space: nowrap;
+}
+.tbl-filter tr{
+    border-bottom: 1px solid #ced4da;
+    font-size: 12px;
+}
+.tbl-filter tbody td{
+    padding: 1px 4px;
+}
+.btn_removefilter{
+    cursor: pointer;    
+}
+.cmb-operadorlogico{
+    border: none;
+}
+.btn-toggleubigeo{
+    cursor: pointer;    
+    margin-top: 6px;
+}
+.container-btnsearchadvanced{
+    margin-bottom: 8px;
+}
+
+/* card table */
+.grilla{
+    border: 1px solid black;
+    z-index: 4800;
+    width: 100%;
+    height: 30vh;
+    bottom: 0px;
+    left: 0px;
+    position: fixed;
+}
+.card.grilla{
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.grilla.max-size{
+    height: auto;
+}
+.grilla.min-size{
+    height: 33vh;
+}
+.grilla.max-size .grilla-body{
+    display: none;
+}
+.grilla.min-size .grilla-body{
+    display: block;
+}
+.btn-tbltoggle {
+    position: absolute;
+    top: -20px;
+    left: 49%;
+    background-color: var(--osinerg-primary);
+    bottom: -1px;
+    border-radius: 5px 5px 0 0;
+    border: 1px solid #000;
+    border-bottom-color: transparent;
+    height: 20px;
+    width: 30px;
+    cursor: pointer;
+    text-align: center;
+    color: #fff;
+    font-size: 29px;
+    line-height: 0.6;
+}
+.btn-tblresize{
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    top: -1px;
+    cursor: n-resize;
+}
+.grilla-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.3rem;
+}
+.grilla-header-title, .container-dtbtns-dtfilter{
+    cursor: default;
+}
+.container-dtbtns-dtfilter.tbl-exportar{
+    min-width: 380px;
+}
+.container-dtbtns-dtfilter.tbl-notexport{
+    white-space: nowrap;
+    flex-wrap: nowrap !important;
+}
+.tbl-result {
+    margin: 0;
+    font-size: 12px;
+    color: #000;
+    border: 1px solid #BCBCBC!important;
+}
+/* .tbl-result thead tr th:nth-child(1),
+.tbl-result tbody tr td:nth-child(1){
+    display: none;
+} */
+/* .tbl-result thead tr th:nth-child(1){
+    width: 30px !important;
+} */
+/* .tbl-result thead tr th:nth-child(2){
+    width: 30px !important;
+} */
+
+.tbl-result.table th {
+    padding: .35rem;
+    background-color: #d0d0d0;
+}
+.tbl-result td {
+    border: 1px solid #BCBCBC!important;
+}
+.tbl-result .tdzoom{
+    text-align: center;
+    cursor: pointer;
+}
+.tbl-result .active{
+    background-color: #7cbfff !important;
+}
+
+/* carusel - buffer*/
+.jcarousel {
+    position: relative;
+    overflow: hidden;
+    width: auto;
+    height: auto;
+}
+.jcarousel ul {
+    width: 20000em;
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.jcarousel ul:before {
+    content: " ";
+    display: table;
+}
+.jcarousel ul:after {
+    content: " ";
+    display: table;
+}
+.jcarousel li {
+    float: left;
+    /* width: auto !important; */
+    height: 100%;
+}
+/* Controles del carousel - buffer*/
+.jc-left, .jc-right {
+    width: 20px;
+    height: 100%;
+    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.jc-left:before, .jc-right:before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    border-left: 3px solid white;
+    border-bottom: 3px solid white;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    top: 35%;
+    left: 5px;
+}
+.jc-left:hover, .jc-right:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+.jc-left, .jc-right {
+    background: rgba(0, 0, 0, 0.5);
+}
+.jc-right {
+    float: right;
+    left: auto;
+    right: 0;
+}
+.jc-right:before {
+    left: auto;
+    right: 5px;
+    -webkit-transform: rotate(225deg);
+            transform: rotate(225deg);
+}
+
+/* Widget Street View */
+.streetview-card{
+    position: absolute!important;
+    padding: 0;
+    z-index: 1;
+    bottom: 50px;
+    left: 10px;
+    max-height: 440px;
+    width: 420px;
+}
+.streetview-card .card-body{
+    padding: 10px 15px;
+    background-color: white;
+}
+.streetview-card .message-noresults-sv{
+    background-color: black !important;
+    color: white;
+    text-align: center;
+    line-height: 360px;
+    font-family: 'Tenali Ramakrishna', sans-serif;
+    display: none;
+}
+.streetview-card .message-instruction-sv{
+    background: rgb(36, 113, 163, 0.8);
+    color: white;
+    font-family: 'Tenali Ramakrishna', sans-serif;
+    font-size: 14px;
+    padding: 5px;
+    line-height: 1.5;
+    border-radius: 8px 0 8px 0;
+    width: 80%;
+    margin-top: 8px;
+    text-align: center;
+    visibility: hidden;
+}
+.streetview-card .foot-sv{
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 0px;
+}
+.streetview-card .foot-sv img{
+    height: 24px;
+    transform: rotate(180deg);
+}
+#container_streetview{
+    height: 360px;    
+}
+#div_view.active-click .esri-view-surface :hover{
+    cursor: crosshair;
+}   
+#btn_markstreet{
+    border-radius: 50%;
+    outline: none;
+}
+#btn_markstreet.active{
+    background-color: #e4bb09;
+}
+
+
+/*WIDGET ADD LAYER */
+
+#wg_addlayer{
+    width: 40vw;
+    position:absolute;
+    background-color: #fff;
+    top: 250px;
+    left: 500px;
+    min-height: 255px;
+  }
+  #wg_addlayer .card-body{
+      padding-top: 5px;
+  }
+  #wg_addlayer form{
+      padding: .5em .5em 0;
+  }
+  #wg_addlayer select{
+      font-size: 13px;    
+  }
+  #wg_addlayer input[type='text']{
+      background: white;
+      border-radius: 0;
+      line-height: 1.8;
+      font-size: 13px;
+  }
+  #wg_addlayer .tab-foot{
+      margin: .5em .5em 0;
+  } 
+  #wg_addlayer .preuploader{
+      min-width: 7em;
+  }
+  .div-upfile .instruction{
+      margin: 0;
+      padding: .5em 1em;
+      font-size: 12px;
+      font-weight: bold;
+      color: #1d305a;
+  }
+  .div-upfile .drop-zone{
+      border: 2px dashed #bbb;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      border-radius: 5px;
+      text-align: center;
+      font: 20pt bold 'Vollkorn';
+      color: #bbb;
+      height: 10em;
+      position: relative;
+  }
+  .div-upfile .drop-zone-placeholder{
+      position: absolute;
+      top: 3em;
+      width: 100%;    
+  }
+  .div-upfile .preuploader{
+      margin: 4em;
+  }
+  .div-upfile .drop-zone .infile{
+      height: 10em;
+      padding-left: 1em;
+      padding-top: 7em;
+      width: 100%;
+  }  
+  .file-upload-status{
+    font-size: 13px;
+  }
+  .file-upload-status.ok{
+    color: #28a745;
+  }
+  .file-upload-status.failed{
+    color: #dc3545;
+  }
+  #cmb_tiposervice{
+    width: 70%;
+    font: message-box; 
+  }
+  #txt_urlservice{
+      width: 100%;
+  }
+  
+
+  .card-legend{
+    position: absolute!important;
+    padding: 0;
+    z-index: 1;
+    bottom: 40px;
+    left: 10px;
+    max-width: 340px;
+    max-height: 450px;
+    background-color: white;    
+}
+.card-legend .card-body{
+    overflow-y: auto;
+}

@@ -1,0 +1,28 @@
+Fuente de servicios usados en el Mapa Energético Minero actual
+===============================================================
+
+Capas y Consulta Avanzada usa:
+================================
+Fuente de Energia Primaria 	-> ArcgisServer serverdc (10.7)
+Acceso Universal Energia 	-> ArcgisServer serverdc (10.7)
+Mineria				-> ArcgisServer serverdc (10.7)
+
+Electricidad	-> ArcgisServer serverosih (10.7)
+Gas Natural	-> ArcgisServer serverosih (10.7)
+Hidrocarburos	-> ArcgisServer serverosih (10.7)
+
+
+Área de Influencia usa:
+=======================
+Todas las capas	-> ArcgisServer arcgis (10.31)
+
+Repontenciar el widget de dibujo: 
+    * texto 
+    * linea a mano alsada
+    * poligono a mano alsada
+
+
+
+buffer: 
+    relleno: rgb(7 93 170 / 20%)
+    outline: rgb(7 93 170 / 100%)

@@ -1,0 +1,412 @@
+:root {
+    --osinerg-primary: #075daa;
+    --osinerg-primary-transparente: rgba(255, 255, 255, 0.33);
+    --osinerg-primary-transparente2: rgb(7 93 170 / 50%);
+}
+
+html, body, #div_view {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+body{
+    overflow: hidden;
+}
+#div_view {
+    height: calc(100% - 70px);
+}
+
+.visible{
+    display: block;
+}
+.display-flex{
+    display: flex;
+}
+.display-contents{
+    display: contents;
+}
+.display-inlineblock{
+    display: inline-block;
+}
+.notvisible{
+    display: none;
+}
+.boxradio{
+    border:1px solid #075daa;
+}
+.boxsombra{
+    z-index: 12!important;
+    -webkit-box-shadow: 3px -3px 10px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px -3px 10px -2px rgba(0,0,0,0.75);
+    box-shadow: 3px -3px 10px -2px rgba(0,0,0,0.75);
+}
+.boxsombra:hover{
+    -webkit-box-shadow: 4px -3px 13px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px -3px 13px -2px rgba(0,0,0,0.75);
+    box-shadow: 4px -3px 13px -2px rgba(0,0,0,0.75);    
+}
+.icon-close{
+    border-radius: 50%;
+    height: 1.5em;
+    width: 1.5em;
+    float: right;
+    text-align: center;
+    padding-top: 2.5px;
+    background-color: rgba(255,255,255,.5);
+    cursor: pointer;
+    margin-left: 4px;
+}
+
+input[type=checkbox], input[type=radio] {
+    padding: 0 5px;
+    width: auto;
+    margin: 0px 3px;
+}
+ul{
+    margin-bottom: 0px;
+}
+a:hover {
+    text-decoration: none;
+}
+
+/* header */
+nav{
+    background-color: var(--osinerg-primary);
+    height: 70px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    color: white;
+}
+nav img{
+    height: 50px;
+}
+nav .title{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* menu navegacion lateral */
+.menu-navegation{
+    position: absolute;
+    top: 80px;
+    left: 15px;
+}
+.menu-navegation li{
+    margin-bottom: 5px;
+}
+.menu-navegation a{
+    color: white;
+    padding: 10px;
+}
+#btn_navegacion3d{
+    padding: initial;
+}
+.menu-navegation .esri-widget--button:hover {
+    background-color: white;
+    border: 1px solid var(--osinerg-primary);
+}
+.menu-navegation .esri-widget--button:hover a{
+    color: black;
+}
+
+/* menu main lateral  */
+.menu-main{
+    position: absolute;
+    background-color:var(--osinerg-primary);
+    top: 20%;
+    right: 18px;
+    padding: 5px 3px;
+    border-radius: 5px;
+}
+.menu-main .list-inline li{
+    margin:15px 0px;
+    padding: 2px;
+}
+.menu-main .list-inline li img{
+    width: 30px;
+}
+.menu-main li >  a:after{
+    content: none !important;
+}
+.item-sectormenu{
+    white-space: nowrap;
+}
+.item-sectormenu [class*="icon-"]{
+    color: white;
+    font-size: 16px;
+} 
+.item-sectormenu > a:hover{
+    background-color: rgba(255,255,255,.2) !important;
+}
+.item-sectormenu > span:hover{
+    background-color: rgba(255,255,255,.2)!important;
+}
+
+/* 3D btnswitch-2d3d*/
+.btnswitch-2d3d{
+    width: 60px;
+    height: 30px;
+    border-radius: 15px;
+    background: #798998;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid white;
+
+}
+.btnswitch-2d3d:after {
+    cursor: pointer;
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    display: block;
+    border-radius: 50%;
+    background: #fff;
+    top: 0px;
+    left: 0px;
+    content: '2D';
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+    text-align: center;
+    line-height: 29px;
+    color: #075daa;
+    font-size: 12px;
+    border: 1px solid #075daa;
+}
+.btnswitch-2d3d.active:after{
+    left: 100%;
+    top: 0px;
+    margin-left: -29px;
+    background: #fff;
+    content: '3D';
+}
+.btnswitch-2d3d input[type="checkbox"]{
+    opacity:0;
+}
+
+/**************************************************************** CSS APOYO************************************************************/
+
+/* Efecto Parpadeo*/
+.parpadea {  
+    animation-name: parpadeo;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  
+    -webkit-animation-name:parpadeo;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+@-moz-keyframes parpadeo{  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+@-webkit-keyframes parpadeo {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+     100% { opacity: 1.0; }
+}
+@keyframes parpadeo {  
+    0% { opacity: 1.0; }
+     50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+/* tooltipo mouse */
+.tooltip-mouse {
+    background: #333;
+    color: white;
+    padding: 4px 8px;
+    font-size: 13px;
+    border-radius: 4px;
+
+    font-size: 14px;
+    padding: 8px;
+    border-radius: 0 8px 0 8px;
+    width: 310px;
+    margin: 20px;
+}
+
+/* opacity */
+.caja-transparencia {
+    text-align: center;
+    margin-bottom: 6px;
+}
+.caja-transparencia span{
+	font-size: 10px;
+}
+
+/* preloader */
+.preloader-none{
+    display: none;
+}
+.preloader{
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 13;
+    align-items: center;
+    display: flex;
+}
+.btn-preloader:disabled {
+    color: #fff;
+    background-color: #075daa;
+    border-color: #075daa;
+    opacity: 1;
+}
+.btn-preloader-cancelar {
+    margin-left: 20px;
+    cursor: pointer;
+    z-index: 20100000;
+}
+
+/* input range */
+input[type='range']:focus {
+    outline: none;
+    cursor: pointer;
+}
+input[type='range'],
+input[type='range']::-webkit-slider-runnable-track,
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+input[type=range]::-webkit-slider-thumb {
+    background-color:white;
+    width: 15px;
+    height: 15px;
+    border: 2px solid var(--osinerg-primary);
+    border-radius: 50%;
+    margin-top: -6px;
+}
+input[type=range]::-moz-range-thumb {
+    background-color:white;
+    width: 15px;
+    height: 15px;
+    border: 2px solid var(--osinerg-primary);
+    border-radius: 50%;
+}
+input[type=range]::-ms-thumb {
+    background-color:white;
+    width: 15px;
+    height: 15px;
+    border: 2px solid var(--osinerg-primary);
+    border-radius: 50%;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    background-color: var(--osinerg-primary);
+    height: 3px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    outline: none;
+}
+input[type=range]::-moz-range-track {
+    background-color: var(--osinerg-primary);
+    height: 3px;
+}
+input[type=range]::-ms-track {
+    background-color: var(--osinerg-primary);
+    height: 3px;
+}
+input[type=range]::-ms-fill-lower {
+    background-color: HotPink
+}
+input[type=range]{
+    cursor: pointer;
+}
+input[type=range]::-ms-fill-upper {
+    background-color: black;
+    
+} 
+
+
+@media (max-height: 800px) {
+    nav{
+       height: 40px; 
+    }
+    nav.navbar{
+        padding: 0px 10px; 
+    }
+    nav img{
+        height: 30px;
+    }
+    nav .title{
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .btnswitch-2d3d{
+        width: 40px;
+        height: 20px;
+        border-radius: 15px;
+    }
+    .btnswitch-2d3d:after {
+        height: 19px;
+        width: 19px;
+        line-height: 16px;
+        font-size: 11px;
+    }
+    .btnswitch-2d3d.active:after{
+        left: 100%;
+        top: 0px;
+        margin-left: -19px;
+        background: #fff;
+        content: '3D';
+    }
+
+    .card-directionsearch {
+        top: 50px !important;
+    }
+}
+
+/* CSS PARA WG && CARD-RESULTADOS MINIMIZADORES */
+.card-legend .card-header-gis{
+    justify-content: space-between;
+    display: flex;
+}
+.btn-minimizar{ 
+    border-radius: 50%;
+    height: 1.5em;
+    width: 1.5em;
+    float: right;
+    text-align: center;
+    padding-top: 2.5px;
+    background-color: rgba(255,255,255,.5);
+    cursor: pointer;
+    margin-left: 4px;
+}
+.btn-maximizar:hover{
+    background-color: white;
+    border: 1px solid var(--osinerg-primary);
+    color: var(--osinerg-primary);
+}
+
+.container-btnminimizadoswg{
+    position: absolute;
+    z-index: 1;
+    bottom: 40px;
+    left: 10px;
+}
+.container-btnminimizadoswg .min-size {
+    bottom: var(--height-grilla);
+}
+
+.container-btnminimizadosresult{
+    position: absolute;
+    z-index: 1;
+    bottom: 40px;
+    left: 10px;
+}
+.container-btnminimizadosresult .min-size {
+    bottom: var(--height-grilla);
+}

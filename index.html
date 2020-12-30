@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSINERGMIN - Mapa Energético Minero</title>
+    <link rel="icon" type="image/png" href="img/osinerg.ico">
+    
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">  <!-- dataTable -->
+    <link rel="stylesheet" href="assets/DataTables/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="assets/DataTables/Buttons/css/buttons.bootstrap4.min.css">
+    
+    <link rel="stylesheet" href="assets/jquery-ui/themes/ui-lightness/jquery-ui.css">
+    <link rel="stylesheet" href="assets/alerts/alerts.css">
+    <link rel="stylesheet" type="text/css" href="assets/fonts-icon/fonts.icon.css">
+    
+    <link rel="stylesheet" href="https://js.arcgis.com/4.14/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/css/main.css">
+    
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/widget.css">
+    <link rel="stylesheet" type="text/css" href="css/libs.css">  
+  </head>
+
+  <body id="mibody" class="cargando">
+
+    <!-- ##### PRELOADER INICIO -->
+    <div class="preloader" id="div_preloadermain">
+      <button class="btn btn-preloader " type="button" disabled>
+        Bienvenido al Visor Geoservidor Energético<br>Espere un momento por favor...<br>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <!-- ##### HEADER -->
+    <nav class="navbar justify-content-between">
+      <div>
+        <a class="navbar-brand title">Geoservidor Energético</a>
+        <!-- btn switch 2D-3D -->
+        <label class="btnswitch-2d3d align-middle" data-toggle="tooltip" data-placement="bottom" title="Cambiar Vista 2D-3D"><input type="checkbox" id="btnswitch_2d3d" value="2D"></label>
+      </div>
+      <div><img src="img/logo.png" alt="osinergmin"></div>
+    </nav>
+
+
+    <!-- ##### VISOR MAP -->
+    <div id="div_view" class="desactive-click">
+
+      <!-- MAIN MENU (right side) -->
+      <div class="menu-main boxsombra boxradio" id="div_menu">
+        <ul class="list-inline text-center" >
+          <!-- Item Capas -->
+          <li class="dropdown">
+            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
+              <img src="img/menuLayers.png">
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <span class="item-sectormenu">
+                  <a class="dropdown-item btn-sectormenu item-menu" href="#" data-subcontainer="#wg_lyl_electricidad">
+                    <img src="img/menuLayers.png"> Electricidad
+                  </a> 
+                  <span class="chb-sectormenu icon-check_box active" id="chb_sectorelectricidad"></span>
+                </span>
+              </li>
+              <li>
+                <span class="item-sectormenu">
+                  <a class="dropdown-item btn-sectormenu item-menu" href="#" data-subcontainer="#wg_lyl_gasnatural"> 
+                    <img src="img/menuLayers.png"> Gas Natural 
+                  </a> 
+                  <span class="chb-sectormenu icon-check_box_outline_blank" id="chb_sectorgasnatural"></span>
+                </span>
+              </li>
+              <li>
+                <span class="item-sectormenu">
+                  <a class="dropdown-item btn-sectormenu item-menu" href="#" data-subcontainer="#wg_lyl_hidrocarburos" > 
+                    <img src="img/menuLayers.png"> Hidrocarburos 
+                  </a> 
+                  <span class="chb-sectormenu icon-check_box_outline_blank" id="chb_sectorhidrocarburos"></span>
+                </span>
+              </li>
+              <li>
+                <span class="item-sectormenu">
+                  <a class="dropdown-item btn-sectormenu item-menu" href="#" data-subcontainer="#wg_lyl_mineria"> 
+                    <img src="img/menuLayers.png"> Minería
+                  </a> 
+                  <span class="chb-sectormenu icon-check_box_outline_blank" id="chb_sectormineria"></span>
+                </span>
+              </li>
+              <li>
+                <span class="item-sectormenu">
+                  <a class="dropdown-item btn-sectormenu item-menu" href="#" data-subcontainer="#wg_lyl_fep"> 
+                    <img src="img/menuLayers.png"> Fuentes de Energía Primaria
+                  </a> 
+                  <span class="chb-sectormenu icon-check_box_outline_blank" id="chb_sectorfep"></span>
+                </span>
+              </li>
+              <li>
+                <span class="item-sectormenu">
+                  <a class="dropdown-item btn-sectormenu item-menu" href="#" data-subcontainer="#wg_lyl_aue"> 
+                    <img src="img/menuLayers.png">  Acceso Universal Energía
+                  </a> 
+                  <span class="chb-sectormenu icon-check_box_outline_blank" id="chb_sectoraue"></span>
+                </span>
+              </li>
+              <li>
+                <span class="item-sectormenu">
+                  <a class="dropdown-item btn-sectormenu item-menu" href="#" data-subcontainer="#wg_lyl_aniadido"> 
+                    <img src="img/menuLayers.png">  Capas añadidas
+                  </a> 
+                  <span class="chb-sectormenu icon-check_box_outline_blank" id="chb_sectoraniadido"></span>
+                </span>
+              </li>
+            </ul>
+          </li>
+          <!-- Item Consulta avanzada -->
+          <li>
+            <a href="#" role="button" class="item-menu" data-subcontainer="#wg_search_avanzada">
+              <img src="img/menusearch.png" data-toggle="tooltip" data-placement="left" title='Consulta Avanzada'>
+            </a>
+          </li>
+          <!-- Item Herramientas -->
+          <li class="dropdown">
+            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">  
+              <img src="img/menutool.png">
+            </a>
+            <ul class="dropdown-menu">
+              <li class="modo2d">
+                <a class="dropdown-item item-menu" data-subcontainer="#wg_buffer" href="#">
+                  <img src="img/widget/buffer.png" alt="área de influencia"> Área de Influencia
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item item-menu" data-subcontainer="#wg_draw" href="#">
+                  <img src="img/widget/draw.png" alt="dibujar">  Dibujar Figura
+                </a>
+              </li>
+              <li class="modo2d">
+                <a class="dropdown-item item-menu" data-subcontainer="#wg_medir2d" href="#">
+                  <img src="img/widget/medir.png" alt="medir"> Medir 2D
+                </a>
+              </li>
+              <li class="modo3d notvisible">
+                <a class="dropdown-item item-menu" data-subcontainer="#wg_medir3d" href="#">
+                  <img src="img/widget/medir.png" alt="medir"> Medir 3D
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item item-menu" data-subcontainer="#wg_searchxy" href="#">
+                  <img src="img/widget/buscarXY.png" alt="buscarxy"> Buscar Coordenada
+                </a>
+              </li>
+              <li class="modo2d">
+                <a class="dropdown-item item-menu" data-subcontainer="#wg_streetview" href="#" id="btn_menusv">
+                  <img src="img/widget/pegman-md.png"> Street View
+                </a> 
+              </li>
+              
+              <li>
+                <a class="dropdown-item item-menu" data-subcontainer="#wg_addlayer" href="#" id="btn_menusv">
+                  <img src="img/widget/addData.ico"> Conectar/Cargar Capa Externa
+                </a> 
+              </li>
+
+              <li class="modo2d">
+                <a class="dropdown-item item-menu" data-subcontainer="#wg_print" href="#">
+                  <img src="img/widget/printer.png"> Imprimir
+                </a> 
+              </li> 
+              <li class="dropdown modo2d">
+                <a class="dropdown-toggle dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
+                  <img src="img/dashboard.png"> Dashboards
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" target="_blank" href=" https://gisem.osinergmin.gob.pe/InterrupcionesxSE/"><img src="img/dashboard.png"> Monitoreo de Interrupciones Críticas </a></li>
+                  <li><a class="dropdown-item" target="_blank" href="https://agol-osinergmin.maps.arcgis.com/apps/opsdashboard/index.html#/1026a66428cf40e7a578c1da8a4b66d1"><img src="img/dashboard.png"> Tablero de Monitoreo de Gas Natural </a></li>
+                  <li><a class="dropdown-item" target="_blank" href="https://gisem.osinergmin.gob.pe/MON_MINERA/"><img src="img/dashboard.png"> Tablero de Monitoreo de Minería </a></li>
+                </ul>
+              </li>              
+            </ul>
+          </li>
+          <!-- Item Mapas base -->
+          <li>
+            <a href="#" class="item-menu" data-subcontainer="#wg_basemap" data-toggle="tooltip" data-placement="left" title="Mapa Base">
+              <img src="img/widget/mapbase.png" >
+            </a>
+          </li>
+          <!-- Item  Ayuda  -->
+          <li class="dropdown" >
+            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
+              <img src="img/menuhelp.png">
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="docs/manual_usuario.pdf" target="_blank">Manual de usuario</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- NAVEGATION TOOLS MENU (basictools +) -->
+      <div class="menu-navegation" id="div_navegation">
+        <ul class="list-inline text-center" >
+          <li class="esri-widget--button"> 
+            <a id="btn_home" data-toggle="tooltip" data-placement="right" title="Home" href="#">
+              <span class="esri-icon esri-icon-home"></span>
+            </a>
+          </li>
+          <li > 
+            <a id="btn_location" data-toggle="tooltip" data-placement="right" title="Buscar mi Ubicación" href="#"></a>
+          </li>
+          <li class="esri-widget--button"> 
+            <a id="btn_zoom_add" data-toggle="tooltip" data-placement="right" title="Acercar" href="#">
+              <span class=" esri-icon esri-icon-plus"></span>
+            </a>
+          </li>
+          <li class="esri-widget--button"> 
+            <a id="btn_zoom_minus" data-toggle="tooltip" data-placement="right" title="Alejar" href="#">
+              <span class=" esri-icon esri-icon-minus"></span>
+            </a>
+          </li>
+          <li class="esri-widget--button display-flex"> 
+            <a id="btn_previous" class='disabled icon-arrow-left' data-toggle="tooltip" data-placement="right" title="Anterior" href="#">
+            </a>
+          </li>
+          <li class="esri-widget--button display-flex"> 
+            <a id="btn_next" class='disabled icon-arrow-right' data-toggle="tooltip" data-placement="right" title="Posterior" href="#">
+            </a>
+          </li>
+          <li class="modo3d notvisible" >
+            <a id="btn_navegacion3d" href="#"></a>
+          </li>
+          <li class="modo3d notvisible" >
+            <a id="btn_compass3d" data-toggle="tooltip" data-placement="right" title="Brújula" href="#"></a>
+          </li>
+          <li class="modo3d notvisible" id="btnSombra" data-toggle="tooltip" data-placement="right" title="Luminosidad">
+            <div class="btn-group">
+              <button type="button" class="btn dropdown-toggle esri-icon-environment-settings esri-widget--button" data-toggle="dropdown" aria-haspopup="true">
+              </button>
+              <div class="dropdown-menu">
+                <div class="card boxradio">
+                  <div class="card-header-gis">
+                    <span class="esri-icon-environment-settings"></span>
+                    Luminosidad
+                  </div>
+                  <div class="card-body">
+                    <label>Tiempo</label>
+                    <input id="time-Hour" type="range" min="0" max="24" step="1" value="15">
+                    <span id="hour-value">15 hrs</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>   
+
+      <!-- SEARCH DIRECTIONS -->
+      <div class="card boxradio boxsombra card-directionsearch">
+        <div class="card-body p-0">
+          <div id="container_wgdirectionsearch"></div>
+        </div>
+      </div>    
+
+      <!-- POINTER COORDINATES (footer)-->
+      <div class="container-coordenadas">
+        <div class="scale">
+          <span class="text-left" id="lbl_scale"></span>
+        </div>
+        <div class="coordenadas text-center">
+          <span id="lbl_coordgeografica"></span>
+          <span id="lbl_coordutm"></span>
+        </div>
+      </div>
+
+      <!-- WG LEYENDA --> 
+      <div class="card card-legend p-0 boxradio boxsombra draggable-element notvisible" id="wg_leyend">
+        <div class="card-header card-header-gis p-1 ">
+          <div>
+            <img src="img/menuLayers.png" alt="" srcset="">
+            <strong>leyenda de capa añadidas</strong>
+          </div>
+          <div>
+            <!-- <span class="icon-close " data-toggle="tooltip" data-placement="top" title="Cerrar" ></span> -->
+            <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxlegend' data-toggle="tooltip" data-placement="top" title="Minimizar" id="btn_minlegend"></span>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div id="Legenda"></div>
+        </div>
+      </div>
+
+    </div>
+
+    
+    <!-- ##### WIDGETS -->
+    <div id="div_widgets">
+
+      <!-- LAYER LISTS -->
+      <div class="card card-layer card-top-let card-sm boxradio boxsombra draggable-element notvisible" data-top='180px' id="wg_lyl_electricidad">
+        <div class="card-header-gis">
+          <img src="img/menuLayers.png" alt="menu">
+          <strong>Electricidad</strong>
+          <span class="icon-close" data-toggle="tooltip" data-placement="bottom" title="Cerrar"></span>
+        </div>
+        <div class="card-body p-0">
+          <div id="lyl_electricidad"></div>
+        </div>
+      </div>
+      <div class="card card-layer card-top-let card-sm boxradio boxsombra draggable-element notvisible" data-top='220px' id="wg_lyl_gasnatural">
+        <div class="card-header-gis">
+          <img src="img/menuLayers.png" alt="menu">
+          <strong>Gas Natural</strong>
+          <span class="icon-close " data-toggle="tooltip" data-placement="bottom" title="Cerrar"></span>
+        </div>
+        <div class="card-body p-0">
+          <div id="lyl_gasnatural"></div>
+        </div>
+      </div>
+      <div class="card card-layer card-top-let card-sm boxradio boxsombra draggable-element notvisible " data-top='260px' id="wg_lyl_hidrocarburos">
+        <div class="card-header-gis">
+          <img src="img/menuLayers.png" alt="menu">
+          <strong>Hidrocarburos</strong>
+          <span class="icon-close " data-toggle="tooltip" data-placement="bottom" title="Cerrar"></span>
+        </div>
+        <div class="card-body p-0">
+          <div id="lyl_hidrocarburos"></div>
+        </div>
+      </div>
+      <div class="card card-layer card-top-let card-sm boxradio boxsombra draggable-element notvisible" data-top='300px' id="wg_lyl_mineria">
+        <div class="card-header-gis">
+          <img src="img/menuLayers.png" alt="menu">
+          <strong>Minería</strong>
+          <span class="icon-close " data-toggle="tooltip" data-placement="bottom" title="Cerrar"></span>
+        </div>
+        <div class="card-body p-0">
+          <div id="lyl_mineria"></div>
+        </div>
+      </div>
+      <div class="card card-layer card-top-let card-sm boxradio boxsombra draggable-element notvisible" data-top='340px' id="wg_lyl_fep">
+        <div class="card-header-gis">
+          <img src="img/menuLayers.png" alt="menu">
+          <strong>Fuentes de Energía Primaria</strong>
+          <span class="icon-close " data-toggle="tooltip" data-placement="bottom" title="Cerrar"></span>
+        </div>
+        <div class="card-body p-0">
+          <div id="lyl_fep"></div>
+        </div>
+      </div>
+      <div class="card card-layer card-top-let card-sm boxradio boxsombra draggable-element notvisible" data-top='380px' id="wg_lyl_aue">
+        <div class="card-header-gis">
+          <img src="img/menuLayers.png" alt="menu">
+          <strong>Acceso Universal Energía</strong>
+          <span class="icon-close " data-toggle="tooltip" data-placement="bottom" title="Cerrar"></span>
+        </div>
+        <div class="card-body p-0">
+          <div id="lyl_aue"></div>
+        </div>
+      </div>
+      <div class="card card-layer card-top-let card-sm boxradio boxsombra draggable-element notvisible" data-top='420px' id="wg_lyl_aniadido">
+        <div class="card-header-gis">
+          <img src="img/menuLayers.png" alt="menu">
+          <strong>Capas Añadidas</strong>
+          <span class="icon-close " data-toggle="tooltip" data-placement="bottom" title="Cerrar"></span>
+        </div>
+        <div class="card-body p-0">
+          <div id="lyl_aniadido"></div>
+        </div>
+      </div>
+      
+      <!-- WG BASEMAP GALLERY-->
+      <div class="card card-top-center card-sm boxradio boxsombra basemap notvisible" id="wg_basemap">
+        <div class="card-body p-0">
+          <div id="container_basemap"></div>  
+        </div>
+      </div>
+
+      <!-- WG AREA INFLUENCIA -->
+      <div class="card card-top-center card-sm boxradio boxsombra draggable-element notvisible" id="wg_buffer">
+        <div class="card-header-gis">
+          <img src="img/widget/draw.png" alt="widget area de influencia">
+          <strong>Área de influencia</strong>
+          <span class="icon-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+        </div>
+        <div class="card-body card-body-buffer p-2">
+          <div class="text-center">
+            <button class="btn-dibujar esri-icon-map-pin" value="point" id="btn_drawpoint_buffer" type="button" data-toggle="tooltip" data-placement="top" title="Dibujar Punto"></button>
+            <button class="btn-dibujar esri-icon-polyline" value="polyline" id="btn_drawpolyline_buffer" type="button" data-toggle="tooltip" data-placement="top" title="Dibujar Línea"></button>
+            <button class="btn-dibujar esri-icon-polygon" value="polygon" id="btn_drawpolygon_buffer" type="button" data-toggle="tooltip" data-placement="top" title="Dibujar Polígono"></button>
+          </div>  
+          <div class="row m-0 mt-2 justify-content-center">
+            <div class="form-group col-3 pl-0 p-1 mb-2">
+              <label>Distancia:</label>
+            </div>
+            <div class="form-group col-5 p-1 mb-2">
+              <input type="number" class="form-control form-control-sm" placeholder="escriba" id="txt_distancia" value="100">
+            </div>
+            <div class="form-group col-3 p-1 mb-2">
+              <select id="cmb_bufferunidad" class="form-control form-control-sm">
+                <option value="meters">m</option>
+                <option value="kilometers">km</option>
+              </select>
+            </div>
+            <div class="form-group col-12 pl-0 mb-0">
+              <label id="info-buffer">Seleccione una figura para comenzar y edite la distancia.</label>
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="btn_clearbuffer">Limpiar <span class="icon-broom"></span></button>
+          </div>
+        </div>
+      </div>       
+
+      <!-- WG DIBUJAR -->
+      <div class="card card-top-center boxradio boxsombra draggable-element notvisible" id="wg_draw">
+        <div class="card-header-gis">
+          <img src="img/widget/draw.png" alt="" srcset="">
+          <strong>Dibujar Figura</strong>
+          <span class="icon-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+        </div>
+        <div class="card-body">
+          <div id="container_draw">
+            <div id='container_sketch' class="wg-sketch"></div>
+            <button class="btn-dibujar icon-broom" value="clear" id="btn_cleardraw" type="button" data-toggle="tooltip" data-placement="top" title="Borrar Gráficos"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- WG MEDIR 2D -->
+      <div class="card card-top-center card-sm boxradio boxsombra draggable-element notvisible" id="wg_medir2d">
+        <div class="card-header-gis">
+          <img src="img/widget/medir.png">
+          <strong>Medir</strong>
+          <span class="icon-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+        </div>
+        <div class="card-body">
+          <div class="container-btnmedir2d">
+            <button class="btn-medir btn-medir2d esri-icon-measure-line" value="distancia2d" type="button" data-toggle="tooltip" data-placement="top" title="Medir Distancia"></button>
+            <button class="btn-medir btn-medir2d esri-icon-measure-area" value="area2d" type="button" data-toggle="tooltip" data-placement="top" title="Medir Area"></button> 
+            <button class="btn-medir btn-medir2d esri-icon-trash" value="clear" type="button" data-toggle="tooltip" data-placement="top" title="Borar Medida"></button> 
+          </div>
+          <div class="notvisible" id="container_distancia2d"></div>
+          <div class="notvisible" id="container_area2d"></div>        
+        </div>
+      </div> 
+      <!-- WG MEDIR 3D -->
+      <div class="card card-top-center card-sm boxradio boxsombra draggable-element notvisible" id="wg_medir3d">
+        <div class="card-header-gis">
+          <img src="img/widget/medir.png">
+          <strong>Medir</strong>
+          <span class="icon-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+        </div>
+        <div class="card-body">
+          <div class="container-btnmedir3d">
+            <button class="btn-medir btn-medir3d esri-icon-measure-line" value="distancia3d" id="btn_distancia3d" type="button" data-toggle="tooltip" data-placement="top" title="Medir Distancia"></button>
+            <button class="btn-medir btn-medir3d esri-icon-measure-area" value="area3d" id="btn_area3d" type="button" data-toggle="tooltip" data-placement="top" title="Medir Area"></button> 
+            <button class="btn-medir btn-medir3d esri-icon-trash" value="clear" id="btn_clearmedir3d" type="button" data-toggle="tooltip" data-placement="top" title="Borar Medida"></button> 
+          </div>
+          <div class="notvisible" id="container_distancia3d"></div>
+          <div class="notvisible" id="container_area3d"></div>        
+        </div>
+      </div>           
+
+      <!-- WG BUSCAR COORDENADAS -->
+      <div class=" card card-top-right card-sm boxradio boxsombra draggable-element notvisible" id="wg_searchxy">
+        <div class="card-header-gis">
+          <img src="img/widget/buscarXY.png">
+          <strong>Buscar Coordenadas</strong>
+          <span class="icon-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+        </div>
+        <div class="card-body">
+          <form id="form_searchXY">
+            <div class="row esri-widget">
+              <div class="col-4">
+                <label class="lbl-coodxy">Sistema de coordenadas:</label>
+              </div>
+              <div class="col-8">
+                <select class="form-control form-control-sm" id="cmb_sistemacoord">
+                  <option value="geografico">Geográficas</option>
+                  <option value="proyectada">Proyectadas</option>
+                </select>
+              </div>
+              <div class="mb-2 col-12 row m-0 container-proyectada notvisible display-flex">
+                <div class="col-4 p-0">
+                  <label class="lbl-coodxy">Proyección:</label>
+                </div>
+                <div class="col-8 p-0 pl-2">
+                  <select class="form-control form-control-sm" id="cmb_proyectada_zona">
+                    <option value="">--Elija una zona--</option>
+                    <option value="sr_z17_psad">Zona 17</option>
+                    <option value="sr_z18_psad">Zona 18</option>
+                    <option value="sr_z19_psad">Zona 19</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-2 col-4">
+                <label class="lbl-coodxy" id='lbl_coord'>Longitud:</label>
+              </div>
+              <div class="mb-2 col-8 ">
+                <input type="text" id="txt_coord"  class="form-control form-control-sm" required >
+              </div>
+              <div class="mb-2 col-4">
+                <label class="lbl-coodxy" id="lbl_coord2">Latitud: </label>
+              </div>
+              <div class="mb-2 col-8 ">
+                <input type="text" id="txt_coord2" class="form-control form-control-sm"  required >
+              </div>
+            </div>
+            <div class="mt-2 text-center">
+              <button type="submit" class="btn btn-sm btn-outline-primary mr-2" id="btn_searchXY">
+                <span class="icon-search"> Buscar</span> 
+              </button>
+              <button type="reset" class="btn btn-sm btn-outline-secondary" id="btn_clearxy">
+                <span class="icon-broom"> Limpiar</span> 
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- WG STREETVIEW -->
+      <div  class="card streetview-card boxradio boxsombra draggable-element notvisible" id="wg_streetview"> 
+        <div class="card-header-gis">
+          <img src="img/widget/pegman-md.png" alt="street view">
+          <strong>Street View</strong>
+          <span class="btn-close icon-close" ></span>
+        </div>
+        <div class="card-body p-0">
+          <div id="container_streetview"> </div> 
+          <div class="message-noresults-sv">Street View no disponible en esta ubicación</div>
+          <div class="foot-sv">
+            <div class="message-instruction-sv">Click en el mapa para visualizar un panorama </div>
+            <button id="btn_markstreet" class="desactive" title="Activar click en el mapa"><img src="img/blueArrowNew.png"></button>
+          </div>      
+        </div>   
+      </div>
+
+      <!-- WG IMPRIMIR -->
+      <div class="card-top-center card-sm card boxradio boxsombra display-flex draggable-element notvisible" id="wg_print">
+        <div class="card-header-gis">
+          <img src="img/widget/printer.png" alt="imprimir">
+          <strong>Imprimir</strong>
+          <span class="icon-close " data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+        <div class="card-body p-0">
+          <div id="container_printmap"></div>
+        </div>
+      </div>
+
+      <!-- WG CONSULTA AVANZADA -->
+      <div class="card card-consulta boxradio boxsombra display-flex draggable-element notvisible"  id="wg_search_avanzada">
+        <div class="card-header-gis">
+          <img src="img/search.png" alt="busqueda">
+          <strong>Consulta Avanzada</strong>
+          <span class="icon-close " data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+        <div class="card-body">
+          <div class="row consulta-body">
+            <div class="form-group col-12">
+              <label>Seleccionar Sector:</label>
+              <select name="group" id="cmb_sector" class="form-control form-control-sm">
+                <option value="">--Elija un sector--</option>
+                <option value="sectorelectricidad">ELECTRICIDAD</option>
+                <option value="sectorgasnatural">GAS NATURAL</option>
+                <option value="sectorhidrocarburos">HIDROCARBUROS</option>
+                <option value="sectormineria">MINERÍA</option>
+                <option value="sectorfep">FUENTES DE ENERGÍA PRIMARIA</option>
+                <option value="sectoraue"> ACCESO UNIVERSAL ENERGÍA</option>
+              </select>
+            </div>
+            <div class="form-group col-12">
+              <label>Seleccionar Grupo:</label>
+              <select name="grupo" id="cmb_grupo" class="form-control form-control-sm">
+                <option value="">--Elija un grupo--</option>
+              </select>
+            </div>
+            <div class="form-group col-12">
+              <label>Seleccionar Capa:</label>
+              <select name="capas" id="cmb_layer" class="form-control form-control-sm">
+                <option value="">--Elija una capa--</option>
+              </select>
+            </div>
+            <div class="form-group col-12">
+              <label>Campo:</label>
+              <select name="campos" id="cmb_fields" class="form-control form-control-sm">
+                <option value="">--Elija un campo--</option>
+              </select>
+            </div>
+            <div class="form-group col-5">
+              <label>Condicional:</label>
+              <select name="condicion" id="cmb_condition" class="form-control form-control-sm">
+                <option value="contiene"> Contiene </option>
+                <option value="=" selected> = </option>
+                <option value="<"> < </option>
+                <option value=">"> > </option>
+                <option value="<>"> Diferente </option>
+                <option value=">="> >= </option>
+                <option value="<="> <= </option>
+              </select>
+            </div>
+            <div class="form-group col-5">
+              <label>valor:</label>
+              <input type="text" class="form-control form-control-sm" placeholder="escriba" id="txt_filter" value="">
+            </div>
+            <div class="form-group col-2">
+              <label ><span></span></label>
+              <button type="button" class="btn-primary btn btn-sm btn-addfilter" id="btn_addfilter"><span class="icon-plus-circle" ></span></button>
+            </div>
+          </div>
+          <div class="row consulta-footer ">
+            <div class="col-12">
+              <fieldset>
+                <legend>Donde</legend>
+                <div class="container-tbl-filter">
+                  <table id='tbl_filter' class="tbl-filter" width=100%>
+                    <tbody id="tbody_filter"></tbody>
+                  </table>
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-12 text-right btn-toggleubigeo">
+              <span class="icon-chevron-up"  id="btn_toggleubigeo" data-toggle="tooltip" data-placement="left" title="Ubigeo"></span>
+            </div>
+            <div class="col-12">
+              <fieldset id="container_ubigeo" class="mb-2">
+                <legend>Ubigeo:</legend>
+                <div class="form-group row mb-1 ">
+                  <label for="colFormLabelSm" class=" pr-0 col-sm-3 col-form-label col-form-label-sm">Región</label>
+                  <div class="col-sm-9">
+                    <select name="region" id="cmb_ubigeoregion" class="form-control form-control-sm">
+                      <option value="">--Elija una región --</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row mb-1">
+                  <label for="colFormLabelSm02" class=" pr-0 col-sm-3 col-form-label col-form-label-sm">Provincia</label>
+                  <div class="col-sm-9">
+                    <select name="prov" id="cmb_ubigeoprovincia" class="form-control form-control-sm">
+                      <option value="">--Elija una provincia --</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row mb-1">
+                  <label for="colFormLabelSm03" class=" pr-0 col-sm-3 col-form-label col-form-label-sm">Distrito</label>
+                  <div class="col-sm-9">
+                    <select name="distrito" id="cmb_ubigeodistrito" class="form-control form-control-sm">
+                      <option value="">--Elija un distrito --</option>
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
+              <div class="col-12 container-btnsearchadvanced text-center">
+                <button type="button" class="btn-outline-primary btn btn-sm display-inlineblock notvisible " id="btn_searchadvanced"><span class="icon-search pr-2" > Consultar</span></button>
+                <button type="button" class="btn-outline-secondary btn btn-sm" id="btn_clearsearchadvanced"><span class="icon-broom pr-2" > Limpiar</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WG - BUSCAR EN CAPA -->
+      <div class="card card-top-center card-sm boxradio boxsombra draggable-element notvisible" id="div_cardsearchinlayer">
+        <div class="card-header-gis">
+          <img src="img/search.png" alt="busqueda en capa">
+          <strong>BÚSQUEDA EN CAPA</strong>
+          <span class="icon-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+        </div>
+        <div class="card-body pb-0">
+          <form id="form_searchinlayer">
+            <label class="lbl-searchinlayer"><strong>SECTOR: </strong> <span id="lbl_sector"></span> </label>
+            <label class="lbl-searchinlayer"><strong>GRUPO: </strong> <span id="lbl_group"></span> </label>
+            <label class="lbl-searchinlayer"><strong>CAPA: </strong> <span id="lbl_leyer"></span> </label>
+            <div class="form-group">
+              <input type="text" class="form-control form-control-sm" id="txt_searchinlayer" aria-describedby="emailHelp" placeholder="Escribe el texto" required>
+            </div>
+            <div class="form-group text-center">
+              <button type="submit" class="btn btn-sm btn-outline-primary" id="btn_searchinlayer">Buscar <span class="icon-search"></span></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" id="btn_clearsearchinlayer">Limpiar <span class="icon-broom"></span></button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- WG AÑDIR CAPAS EXTERNAS -->
+      <div class="card boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_addlayer" >
+        <div  id="wg_addlayer_content">
+          <div class="card-header-gis">
+            <!-- <div> -->
+              <img src="img/widget/addData.ico" alt="" srcset="">
+              <strong>Conectar / Cargar capa de información externa</strong>
+            <!-- </div> -->
+            <!-- <div> -->
+              <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+              <!-- <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxaddlayer' data-toggle="tooltip" data-placement="top" title="Minimizar"></span> -->
+            <!-- </div> -->
+          </div>
+          <div class="card-body ">
+            <div>
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item "><a class="nav-link active" data-toggle="tab" href="#tabpane_addlayer_url" role="tab">Vía Enlace Externo</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tabpane_addlayer_shp" role="tab">Vía Archivo Shape</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tabpane_addlayer_csv" role="tab">Vía Archivo Csv</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tabpane_addlayer_kml" role="tab">Vía Archivo Kml</a></li>
+              </ul>
+              <div  class="tab-content">  
+                <div class="tab-pane active" role="tabpanel" id="tabpane_addlayer_url">      
+                  <form>
+                    <div class="form-group">
+                      <label for="cmb_tiposervice">Tipo:</label>
+                      <select id="cmb_tiposervice" class="form-control">
+                        <option value="shape">Servicio web de ArcGis for Server</option>
+                        <option value="wms">Servicio web de WMS - OGC</option>
+                        <option value="kml">Archivo KML</option>
+                        <option value="geojson">Archivo GeoJson</option>
+                        <option value="georss">Archivo GeoRss</option>
+                        <option value="csv">Archivo CSV</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="txt_urlservice">Dirección URL:</label>
+                      <input type="text" class="form-control" id="txt_urlservice" autofocus>
+                    </div>
+                  </form>                     
+                  <ul class="text-center list-inline">                  
+                    <li class="list-inline-item">
+                      <button  id="btn_preuploader" class="btn btn-outline-primary btn-sm notvisible" disabled>
+                        <div class="preuploader"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></div>
+                      </button>
+                      <button  id="btn_addlayer" class="btn btn-outline-primary btn-sm">
+                        <span class="icon-plus pr-2"></span> Añadir Capa
+                      </button>
+                    </li>                
+                    <li class="list-inline-item">
+                      <button id="btn_clear_addlayer" class="btn btn-outline-secondary btn-sm">
+                        <span class="icon-broom pr-2"></span> Limpiar
+                      </button>
+                    </li>
+                  </ul>
+                  <div class="tab-foot">
+                    <span class="file-upload-status" id="sp_uploadstatus_url"></span>
+                  </div>
+                </div>
+      
+                <div class="tab-pane" role="tabpanel" id="tabpane_addlayer_shp" >
+                    <div class="div-upfile">      
+                        <p class="instruction"> Añade datos al mapa desde un shapefile comprimido (.zip)</p>
+                        <form enctype="multipart/form-data" method="post" id="form_uploadshp">
+                          <div class="drop-zone" id="drop_zone">
+                            <div class="preuploader notvisible"><span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span></div>
+                            <span class="drop-zone-placeholder">Suelte el archivo .zip aquí</span>
+                            <input type="file" name="file" id="fil_upshp" class="infile" accept=".zip"/>
+                          </div>                            
+                        </form>
+                    </div>
+                    <div class="tab-foot">
+                      <span class="file-upload-status" id="sp_uploadstatus_shp"></span>
+                    </div>
+                </div> 
+      
+                <div class="tab-pane" role="tabpanel" id="tabpane_addlayer_csv">
+                  <div class="div-upfile">      
+                      <p class="instruction"> 
+                        <span>Añade datos al mapa desde un archivo CSV </span><br>
+                        <span>El archivo debe contener sus campos de coordenadas con uno de los siguientes nombres: </span><br> 
+                        <span> - Latitud: lat, latitude, y, ycenter, latitud</span><br>
+                        <span> - Longitud: lon, long, longitude, x, xcenter, longitud</span>
+                      </p>
+                      <form enctype="multipart/form-data" method="post" id="form_uploadcsv">
+                        <div class="drop-zone" id="drop_zone">
+                          <div class="preuploader notvisible" id="div_preuploader_zip"><span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span></div>
+                          <span class="drop-zone-placeholder">Suelte el archivo .csv aquí</span>
+                          <input type="file" name="file" id="fil_upcsv" class="infile" accept=".csv"/>
+                        </div>                            
+                      </form>
+                  </div>
+                  <div class="tab-foot">
+                    <span class="file-upload-status" id="sp_uploadstatus_csv"></span>
+                  </div>
+                </div> 
+      
+                <div class="tab-pane" role="tabpanel" id="tabpane_addlayer_kml" >
+                    <div class="div-upfile">      
+                        <p class="instruction"> Añade datos al mapa desde un archivo KML</p>
+                        <form enctype="multipart/form-data" method="post" id="form_uploadkml">
+                          <div class="drop-zone" id="drop_zone">
+                            <div class="preuploader notvisible"><span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span></div>
+                            <span class="drop-zone-placeholder">Suelte el archivo .kml aquí</span>
+                            <input type="file" name="file" id="fil_upkml" class="infile" accept=".kml, .kmz"/>
+                          </div>                            
+                        </form>
+                    </div>
+                    <div class="tab-foot">
+                      <span class="file-upload-status" id="sp_uploadstatus_kml"></span>
+                    </div>
+                </div> 
+              </div>       
+            </div>    
+          </div>    
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ##### RESULTS -->
+
+    <div id="div_results">
+
+      <!-- TABLA RESULTADOS CONSULTA AVANZADA  -->
+      <div class="card p-0 boxradio boxsombra grilla min-size notvisible" id="container_tblsearchadvanced">
+        <span  class=" btn-tbltoggle icon-caret-down"></span>
+        <div class="card-header-gis pl-4 grilla-header">
+          <div class="grilla-header-title">
+            <strong><span class="lbl-titlereporte"></span> </strong>
+          </div>
+          <div class="container-dtbtns-dtfilter tbl-exportar">
+            <input type="text" class="txt-dt-filtar " placeholder="Buscar en la tabla" >
+          </div>
+        </div>
+        <div class="grilla-body">
+          <table id="tbl_searchadvanced" class="tbl-result table table-striped table-bordered nowrap" style="width:100%">
+            <thead ></thead>
+            <tbody ></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TABLA RESULTADOS BUSCAR EN CAPA -->
+      <div class="card p-0 boxradio boxsombra grilla min-size notvisible" id="container_tblsearchinlayer">
+        <span  class=" btn-tbltoggle icon-caret-down"></span>
+        <div class="card-header-gis pl-4 grilla-header">
+          <div class="grilla-header-title">
+            <strong> <span class="lbl-titlereporte"></span> </strong>
+          </div>
+          <div class="container-dtbtns-dtfilter tbl-notexport">
+            <input type="text" class="txt-dt-filtar " placeholder="Buscar en la tabla" >
+          </div>
+        </div>
+        <div class="grilla-body">
+          <table id="tbl_searchinlayer" class="tbl-result table table-striped table-bordered nowrap" style="width:100%">
+            <thead ></thead>
+            <tbody ></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RESULTADOS DE AREA INFLUENCIA -->
+      <div class="card p-0 boxradio boxsombra grilla min-size notvisible" id="container_tblbuffer">
+        <span  class=" btn-tbltoggle icon-caret-down"></span>
+        <div class="card-header-gis pl-4 grilla-header">
+          <div class="grilla-header-title">
+            <strong>Resultado de Área de Influencia</strong>
+          </div>
+          <div class="container-dtbtns-dtfilter tbl-notexport">
+            <input type="text" class="txt-dt-filtar notvisible" placeholder="Buscar en la tabla" >
+          </div>
+        </div>
+        <div class="grilla-body">
+          <!-- <div class="visible text-center" id="container_infobuffer">
+            <span >No hay entidades en este área de influencia.</span>
+          </div> -->
+          <div class="jcarousel">
+            <ul class="nav nav-tabs" id="tab_buffer" role="tablist"></ul>
+            <a href="" class="jc-left"></a>
+            <a href="" class="jc-right"></a>
+          </div>
+          <div class="tab-content" id="tab_content_buffer"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ##### OTROS -->
+
+    <div class="container-btnminimizadoswg  max-size notvisible" id="div_btnmaximizadores">      
+      <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar" data-toggle="tooltip" data-placement="top" title='Leyenda' id="btn_maxlegend" data-subcontainer="#wg_leyend"> <span class="icon-th-list"></span></button>
+    </div>
+
+    <!-- PRELOADER CONSULTAS-->
+    <div class="preloader-none" id="div_preloader">
+      <button class="btn btn-preloader" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Cargando...
+      </button>
+    </div>
+ 
+    <!-- tooltip mouse -->
+    <div id="tooltip_mouse" class='notvisible tooltip-mouse' role="tooltip">
+      <span></span>
+    </div>
+
+    <script>
+      var locationPath = location.pathname.replace(/\/[^\/]+$/, ""); 
+      var host=location.host;
+      if(host==''){
+        locationPath = locationPath+'/'; 
+      }
+      window.dojoConfig = {
+        parseOnLoad: true,
+        packages: [
+        {
+          name: "js",
+          location: locationPath + "js"
+        }
+        ]
+      };
+    </script>
+
+    <script src="assets/jquery/jquery.js"></script>
+    <script src="assets/jquery-ui/jquery-ui.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/jquery-jcarousel/jquery.jcarousel.min.js"></script>
+    <!-- dataTable -->
+    <script src="assets/DataTables/js/jquery.dataTables.min.js"></script>
+    <script src="assets/DataTables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="assets/DataTables/Buttons/js/dataTables.buttons.min.js"></script>
+    <script src="assets/DataTables/Buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="assets/DataTables/extern/jszip.min.js"></script>
+    <script src="assets/DataTables/extern/pdfmake.min.js"></script>
+    <script src="assets/DataTables/extern/vfs_fonts.js"></script>
+    <script src="assets/DataTables/Buttons/js/buttons.html5.min.js"></script>
+    <script src="assets/DataTables/Buttons/js/buttons.colVis.min.js"></script>
+    <!-- <script src="assets/DataTables/Buttons/js/buttons.print.min.js"></script> -->
+    
+    <script type="text/javascript" src="assets/alerts/alerts.js" ></script>
+    <script src="assets/moment/moment.js"></script>
+
+    
+    <script src="https://js.arcgis.com/4.14/"></script>
+    <script type="text/javascript" src="js/root.js"></script>
+    <script type="text/javascript" src="js/eventswindow/events.js" ></script>
+
+    <!-- Key  Osinergmin-->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmbMJmoWDy9TOS-cxOeCubUaIdNcSemk8"></script>
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
+        // $('.esri-icon-environment-settings').wrap('<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="palomino"></span>');
+      });
+
+    </script>
+  </body>
+
+
+  <!--  /*REVISADO*/ -->
+</html>
