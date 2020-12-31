@@ -1,3 +1,8 @@
+.card-legend{
+    border: 0px;
+    --max-heigth-cardlegend: calc(50vh);
+}
+
 /* card */
 .card{
     position: absolute!important;
@@ -552,7 +557,8 @@ legend{
     left: 10px;
     max-width: 340px;
     max-height: 450px;
-    background-color: white;    
+    background-color: white;
+    --max-heigth-cardlegend: 450px;
 }
 .card-legend .card-body{
     overflow-y: auto;

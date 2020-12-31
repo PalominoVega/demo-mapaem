@@ -38,7 +38,7 @@ define([
 
   ){
 
-    var view = __globspace.view;
+    var view = __globspace.currentview;
     var __gru_aniadido = Services.getGruAniadido();
 
     $(function () {

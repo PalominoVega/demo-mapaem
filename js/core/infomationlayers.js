@@ -372,7 +372,6 @@ define([
     }
 
     if (layer.type == 'group') {
-      console.log('grupo');
       let class_sector = 'class-sector';
       idlayer = `${idlayer}?group`;
       // añadir caja de transparencia
@@ -643,6 +642,8 @@ define([
 
         $(".modo3d").addClass('visible').removeClass('notvisible');
         $(".modo2d").addClass('notvisible').removeClass('visible');
+        $('#wg_leyend').hide(400);
+        // $('#wg_leyend').removeClass('visible').addClass('notvisible');
 
     }else{
 
@@ -672,10 +673,19 @@ define([
 
         $(".modo3d").addClass('notvisible').removeClass('visible');
         $(".modo2d").addClass('visible').removeClass('notvisible');
+        $('#wg_leyend').show(400);
+        // $('#wg_leyend').addClass('visible').removeClass('notvisible');
     }
-    __map.addMany([ __gru_aniadido, __globspace._gly_coodxy, __mil_aue, __mil_fep, __mil_mineria, __mil_hidrocarburos, __mil_gasnatural, __mil_electricidad]);
+    __map.addMany([__globspace._gly_coodxy, __mil_aue, __mil_fep, __mil_mineria, __mil_hidrocarburos, __mil_gasnatural, __mil_electricidad]);
+
+    
+    // if (!valor){
+    //   // __map.addMany([ __gru_aniadido]);
+    // }
+
     __globspace.currentview=__view;
     __globspace.currentmap=__map;
+    legend.view = __view
     getGraphicPopup(__globspace.currentview);
     loadView3D(__globspace.currentview);
   });

@@ -98,6 +98,26 @@
     margin: 2px 35px;
 }
 
+/* LEGEND */
+.card-legend .esri-legend__service{
+    padding: 10px 10px 0px 10px;
+}
+.esri-legend__layer-child-table{
+    margin: 0px;
+}
+.esri-legend__layer-table.esri-legend__layer-table--size-ramp{
+    margin-bottom: 2px !important;
+}
+.esri-legend__layer-caption{
+    padding-bottom: 0px;
+}
+.esri-legend__layer-cell{
+    padding: 0px 5px;
+}
+.esri-legend{
+    max-height: calc(var(--max-heigth-cardlegend) - 30px);
+}
+
 /* oculta widget por defecto (zoom, navagacion3d, brujula3d)*/
 .esri-ui-corner .esri-component.esri-zoom,
 .esri-ui-corner .esri-component.esri-navigation-toggle,
