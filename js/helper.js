@@ -641,7 +641,11 @@ define([
 
         getValidationForm: function (form, requiere) {
             return getValidationForm(form, requiere);
-        }
+        },
+        
+        getFieldsHide: function () {
+            return __arr_fieldhide;
+        },
     }
     
   });

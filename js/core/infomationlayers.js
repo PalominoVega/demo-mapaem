@@ -80,7 +80,7 @@ define([
 
   // Leyenda
   var legend = new Legend({
-    view: __globspace.view,
+    view: __globspace.currentview,
     container: "Legenda",
     layerInfos: [{
       layer: __gru_aniadido
@@ -343,6 +343,8 @@ define([
 
     _lyl_aue.listItemCreatedFunction = defineActionsLyl;
     _lyl_aue.on("trigger-action", getTriggerActionLyl);
+
+    _lyl_aniadido.listItemCreatedFunction = defineActionsLyl;
   }
 
   function defineActionsLyl(event){
@@ -367,6 +369,24 @@ define([
         title: "Transparencia",
         className: "esri-icon-environment-settings",
       };
+    }
+
+    if (layer.type == 'group') {
+      console.log('grupo');
+      let class_sector = 'class-sector';
+      idlayer = `${idlayer}?group`;
+      // añadir caja de transparencia
+      let div = document.createElement("div");
+      div.className = 'caja-transparencia';
+      div.id = 'div_' + idlayer;
+      div.innerHTML = `<input type="range" min="0" max="100" value="100" step="5" id='${idlayer}' class="ran-opacity ${class_sector}" > <span id='lbl_${idlayer}' >100 %</span>`;
+
+      item.panel = {
+        content: [div],
+        title: "Transparencia",
+        className: "esri-icon-environment-settings sector-123",
+      };
+
     }
     /* fin transparencia secotres*/
 
