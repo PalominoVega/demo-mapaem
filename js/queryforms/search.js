@@ -39,7 +39,7 @@ define([
         __ubigeogeometry = {},        
         __jsonvaluefiels =[];
     
-    _gly_searchadvanced = new GraphicsLayer({
+    __globspace._gly_searchadvanced = new GraphicsLayer({
         listMode:"hide",
         title:"Busqueda Avanzada"
     });
@@ -49,7 +49,7 @@ define([
         title: "Buffer"
     });
 
-    __globspace.map.add(_gly_searchadvanced);
+    __globspace.map.add(__globspace._gly_searchadvanced);
 
     loadRegion();
 
@@ -391,7 +391,7 @@ define([
         let objectid=$(this).attr('id');
         let namefield = $(this).attr('data-namefield');
         let sql = `${ namefield } = ${ objectid }`;
-        Helper.paintToZoom(sql, __url_query, _gly_searchadvanced);
+        Helper.paintToZoom(sql, __url_query, __globspace._gly_searchadvanced);
     })
 
     // Evento lanzado para mostrar/ocultar div ubigeo
@@ -402,13 +402,13 @@ define([
     })
     
     $("#btnswitch_2d3d").on('change',function(){
-        __globspace.currentview.map.add(_gly_searchadvanced);
+        __globspace.currentview.map.add(__globspace._gly_searchadvanced);
     })
 
 
     // contrar registro de busqueda y pasar a busqueda
     function search() {
-        _gly_searchadvanced.removeAll();
+        __globspace._gly_searchadvanced.removeAll();
         _gly_ubigeo.removeAll();
         let sql = '1=1', 
             idtable='#tbl_searchadvanced', 
@@ -514,8 +514,8 @@ define([
                             alertMessage('El resultado supera el límite, por ello solo se muestra los primeros 1000 registros. \n Para mejorar su consulta, ingrese más filtros.','warning', 'bottom-right');
                         }
                         Helper.loadTable(response, fields, __titlelayer, idtable, isexportable);
-                        // Helper.renderToZoom(response, _gly_searchadvanced);
-                        Helper.renderGraphic(response, _gly_searchadvanced);
+                        // Helper.renderToZoom(response, __globspace._gly_searchadvanced);
+                        Helper.renderGraphic(response, __globspace._gly_searchadvanced);
 
 
                         if(Object.keys(_gra_ubigeo).length ==0){
@@ -559,7 +559,7 @@ define([
                         alertMessage('El resultado supera el límite, por ello solo se muestra los primeros 1000 registros. \n Para mejorar su consulta, ingrese más filtros.','warning', 'bottom-right');
                     }
                     Helper.loadTable(response, fields, __titlelayer, idtable, isexportable);
-                    Helper.renderToZoom(response, _gly_searchadvanced);
+                    Helper.renderToZoom(response, __globspace._gly_searchadvanced);
                 }
             }).catch(function (error) {
                 Helper.hidePreloader();
@@ -774,7 +774,7 @@ define([
         $('#cmb_ubigeodistrito').html('<option value="">--Primero elija una provincia--</option>');
         Helper.hideGrid();
         __globspace.currentview.graphics.remove(_gra_ubigeo);
-        _gly_searchadvanced.removeAll();
+        __globspace._gly_searchadvanced.removeAll();
     }
 
     

@@ -15,7 +15,7 @@ define([
   ){
 
     // esriConfig.request.proxyUrl = "https://proxyphp.herokuapp.com/proxy.php"; //oficial
-    esriConfig.request.proxyUrl = "./proxy_php/proxy.php"; 
+    esriConfig.request.proxyUrl = "./proxy_php/proxy.php";
     
 
     var url_electricidad='https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/ELECTRICIDAD/MapServer';

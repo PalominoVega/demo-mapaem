@@ -14,14 +14,14 @@ define([
 
     var __url_query = '',
         __filter = '',
-        __titlereport='',
+        __titlereport='';
 
-        _gly_searchinlayer = new GraphicsLayer({
+        __globspace._gly_searchinlayer = new GraphicsLayer({
             listMode: "hide",
             title: "Búsqueda en capa"
         });
 
-    __globspace.map.add(_gly_searchinlayer);
+    __globspace.map.add(__globspace._gly_searchinlayer);
 
     // Evento para inicializar busqueda
     $('#wg_searchinlayer').on('submit', '#form_searchinlayer', function (evt) {
@@ -57,7 +57,7 @@ define([
         let namefield = $(this).attr('data-namefield');
         let sql = `${ namefield } = ${ objectid }`;
 
-        Helper.paintToZoom(sql, __url_query, _gly_searchinlayer);
+        Helper.paintToZoom(sql, __url_query, __globspace._gly_searchinlayer);
     });
 
     // Evento lanzado para limpiar toda la operación
@@ -67,7 +67,7 @@ define([
         __filter = '';
         __titlereport='';
         __outfields='';
-        _gly_searchinlayer.removeAll();
+        __globspace._gly_searchinlayer.removeAll();
         $('#txt_searchinlayer').val('');
 
         $('.form-group').removeClass('error');
@@ -78,7 +78,7 @@ define([
     // FUNCIONES
 
     function getQuery(){
-        _gly_searchinlayer.removeAll();
+        __globspace._gly_searchinlayer.removeAll();
         
         let _queryt = new QueryTask({ url: __url_query }),
         _qparams = new Query();
@@ -137,7 +137,7 @@ define([
                 
             } else {
                 Helper.loadTable(response, fields, __titlereport, '#tbl_searchinlayer', false);
-                Helper.renderToZoom(response, _gly_searchinlayer);
+                Helper.renderToZoom(response, __globspace._gly_searchinlayer);
                 
                 if (nreg >= 1000) {
                     alertMessage('El resultado supera el límite de registros a mostrar, por lo tanto solo se muestra los primeros 1000 registros.', 'warning', 'top-center', true);

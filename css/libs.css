@@ -117,6 +117,10 @@
 .esri-legend{
     max-height: calc(var(--max-heigth-cardlegend) - 30px);
 }
+.esri-legend__message {
+    display: none;
+}
+
 
 /* oculta widget por defecto (zoom, navagacion3d, brujula3d)*/
 .esri-ui-corner .esri-component.esri-zoom,

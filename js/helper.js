@@ -105,7 +105,7 @@ define([
 
                             // solamente para campo con la palabra MES 
                             if (fields[j].name == 'MES') {
-                                item = getMonthName(item).f;
+                                item = getMonthName(parseInt(item)).f;
                             }
     
                             // asigno la zoom 
@@ -577,6 +577,61 @@ define([
         return fecha;
     }
 
+    function getMonthName(nummes){ // s: small  f: full
+        nombremeses = {
+            1: {
+                s: "Ene",
+                f: "Enero"
+            },
+            2: {
+                s: "Feb",
+                f: "Febrero"
+            },
+            3: {
+                s: "Mar",
+                f: "Marzo"
+            },
+            4: {
+                s: "Abr",
+                f: "Abril"
+            },
+            5: {
+                s: "May",
+                f: "Mayo"
+            },
+            6: {
+                s: "Jun",
+                f: "Junio"
+            },
+            7: {
+                s: "Jul",
+                f: "Julio"
+            },
+            8: {
+                s: "Ago",
+                f: "Agosto"
+            },
+            9: {
+                s: "Set",
+                f: "Setiembre"
+            },
+            10: {
+                s: "Oct",
+                f: "Octubre"
+            },
+            11: {
+                s: "Nov",
+                f: "Noviembre"
+            },
+            12: {
+                s: "Dic",
+                f: "Diciembre"
+            }
+        }
+
+        return nombremeses[nummes];
+    }
+
     function getValidationForm(form, requiere){
         let $form = $(`#${ form }`);
         let auxlength = requiere.length;
@@ -641,6 +696,10 @@ define([
 
         getValidationForm: function (form, requiere) {
             return getValidationForm(form, requiere);
+        },
+
+        getMonthName: function (nummes) {
+            return getMonthName(nummes);
         },
         
         getFieldsHide: function () {

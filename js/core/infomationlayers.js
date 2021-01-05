@@ -642,7 +642,10 @@ define([
 
         $(".modo3d").addClass('visible').removeClass('notvisible');
         $(".modo2d").addClass('notvisible').removeClass('visible');
+        $("#wg_addlayer").addClass('notvisible').removeClass('visible');
+        $('#div_btnmaximizadores').hide(400);
         $('#wg_leyend').hide(400);
+        
         // $('#wg_leyend').removeClass('visible').addClass('notvisible');
 
     }else{
@@ -673,10 +676,13 @@ define([
 
         $(".modo3d").addClass('notvisible').removeClass('visible');
         $(".modo2d").addClass('visible').removeClass('notvisible');
-        $('#wg_leyend').show(400);
+        
+        if (__gru_aniadido.layers.items.length>0) {
+          $('#wg_leyend').show(400);
+        }
         // $('#wg_leyend').addClass('visible').removeClass('notvisible');
     }
-    __map.addMany([__globspace._gly_coodxy, __mil_aue, __mil_fep, __mil_mineria, __mil_hidrocarburos, __mil_gasnatural, __mil_electricidad]);
+    __map.addMany([__globspace._gly_searchadvanced, __globspace._gly_searchinlayer, __globspace._gly_coodxy, __mil_aue, __mil_fep, __mil_mineria, __mil_hidrocarburos, __mil_gasnatural, __mil_electricidad]);
 
     
     // if (!valor){

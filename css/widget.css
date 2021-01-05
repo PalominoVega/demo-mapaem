@@ -3,6 +3,13 @@
     --max-heigth-cardlegend: calc(50vh);
 }
 
+#wg_lyl_aniadido .esri-layer-list__item-actions-menu-item[title = 'leyenda' ] {
+    display: none;
+}
+#wg_lyl_aniadido .esri-legend.esri-widget--panel.esri-widget{
+    display: none;
+}
+
 /* card */
 .card{
     position: absolute!important;
