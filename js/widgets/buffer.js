@@ -294,6 +294,7 @@ define([
 
     
     function activeEventsTabs() {
+      console.log('activar tabs');
       // Evento lanzado para obtener los parametros para la consulta de una capa en especifico
       $('#tab_buffer a').on('click', function (e) {
         e.preventDefault()
@@ -359,17 +360,22 @@ define([
         tabbuffercontent = '',
         firstlayer = {},
         firstidtable = '',
-        firstidcache = '';
+        firstidcache = '',
+        iserror = false,
+        mensaje='¡Se detectaron algunos inconvenientes de conexión! <br> No se pudo cargar lo correspondiente a: <br>';
   
       for (let i = 0; i < auxlength; i++) { // obtener el total de layars a recorrer
         const item = layersgroup[i];
         aux_count += item.length;
       }
   
+      console.log(aux_count);
+      console.log(auxlength);
+
       for (let i = auxlength - 1; i >= 0; i--) {
         let layer = layersgroup[i];
         let auxlength2 = layer.length;
-        
+        console.log(auxlength2);
         for (let j = auxlength2 - 1; j >= 0; j--) {
           let item = layer[j],
             titletab = item.titlelayers,
@@ -380,7 +386,7 @@ define([
   
           _qparams.geometry = __buffergeometry;
           _qparams.spatialRelationship = "intersects";
-          _qparams.outFields = ['*'];
+          // _qparams.outFields = ['*'];
           _qparams.where = '1=1';
           _queryt.executeForCount(_qparams).then(function (response) {
             let nreg = response;
@@ -420,6 +426,8 @@ define([
               __url_layerselected = url_servicio;
             }
   
+            console.log(aux_count);
+            
             // activar eventos en tabs -- renderizar los tab y contenido 
             if (aux_count == 1) {
               if (isfirstintersect) {
@@ -432,14 +440,41 @@ define([
                 getDataIntersected(firstlayer, firstidtable, firstidcache);
                 $(`#tab${firstidtable}`).addClass('active');
                 $(`#${firstidtable}`).addClass('active show');
-    
                 activeEventsTabs();
               }
             }
+
+            if(iserror){
+              alertMessage(mensaje, 'warning');
+            }
+            
             aux_count--;         
   
           }).catch(function (error) {
-            Helper.hidePreloader();
+
+            iserror = true;
+            mensaje += ` - ${ titletab } <br>`;
+            // activar eventos en tabs -- renderizar los tab y contenido 
+            if (aux_count == 1) {
+              if (isfirstintersect) {
+                Helper.hidePreloader();
+                alertMessage('No hay entidades en esta área de influencia.', 'warning', 'top-center', true);
+              } else {
+                $('#tab_buffer').html(tabbuffer);
+                $('#tab_content_buffer').html(tabbuffercontent);
+                getDataIntersected(firstlayer, firstidtable, firstidcache);
+                $(`#tab${firstidtable}`).addClass('active');
+                $(`#${firstidtable}`).addClass('active show');
+    
+                activeEventsTabs();
+                
+                alertMessage(mensaje, 'warning');
+              }
+
+              // Helper.hidePreloader();
+            }
+            console.log(aux_count);
+            aux_count--;  
             console.log("query task error \n", error);
           })
         }
@@ -484,6 +519,9 @@ define([
         alertMessage('El resultado supera el límite de registros a mostrar, por lo tanto solo se muestra los primeros 1000 registros.', 'warning', 'top-center', true);
       }
     }).catch(function (error) {
+      let mensaje= `¡Se detectaron algunos inconvenientes de conexión!. Por favor vuelva a seleccionar la pestaña ${ layer.title }`;
+      alertMessage(mensaje, 'warning');
+      $('#container_tblbuffer').addClass('visible').removeClass('notvisible');
       Helper.hidePreloader();
       console.log("query task error \n", error);
     })

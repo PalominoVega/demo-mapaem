@@ -80,6 +80,9 @@ define([
     let _print = new Print({
       view: __globspace.view,
       container: 'container_printmap',
+      templateOptions: {
+        title: "Geoservidor Energético",
+      },
       printServiceUrl: "https://gisem.osinergmin.gob.pe/serverosih/rest/services/ExportWebMapMEM/GPServer/Export%20Web%20Map"
     });
 

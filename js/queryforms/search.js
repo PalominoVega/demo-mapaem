@@ -90,16 +90,12 @@ define([
             }
             $('#cmb_grupo').html(cmb);
         }
-        // else{
-        //     alertMessage('Elija una sector','warning');
-        // }
     });
 
     /**
      * load grupos 
      * lleno __layers del __grouplayer 
      */
-    // $('#cmb_grupo').change(function (e) { 
     $('#wg_search_advanced').on('change', '#cmb_grupo', function (e) {
         e.preventDefault();
         let sector = $(this).val();
@@ -116,8 +112,6 @@ define([
         }else{
             $('#cmb_layer').html('<option value="">-- Primero elija un grupo --</option>');
             $('#cmb_fields').html('<option value="">-- Primero elija una capa --</option>');
-
-            // alertMessage('Elija una grupo','warning');
         }
     });
 
@@ -126,44 +120,20 @@ define([
      * lleno __url_query del __layer
      * lleno __fields del __layer
      */
-    // $('#cmb_layer').change(function (e) { 
     $('#wg_search_advanced').on('change', '#cmb_layer', function (e) {
         e.preventDefault();
         clearFields();
         let layer = $(this).val();
-        // let cmb='<option value="">--Elija un campo--</option>';
         
         if (layer != '') {
             __url_query = __layers[layer].service;
             __sublayer = __layers[layer].sublayer;
             getTypeFields();
         } else {
-            // alertMessage('Elija una capa', 'warning', 'top-center', true);
             $('#btn_searchadvanced').addClass('notvisible').removeClass('visible');
             $('#cmb_fields').html('<option value="">-- Primero elija una capa --</option>');
         }
 
-        // if(layer!=''){
-        //     __url_query=__layers[layer].service;
-        //     __fields=__layers[layer].fields;
-        //     let nfields=__fields.length;
-            
-        //     for (let i = 0; i < nfields; i++) {
-        //         let field=__fields[i],
-        //             fieldlabel=(field.fieldlabel).toUpperCase();
-
-        //         if(field.fieldname!='OBJECTID'){
-        //             cmb +=`<option value="${field.fieldname}"> ${fieldlabel}</option>`;
-        //         }
-        //     };
-        //     $('#btn_searchadvanced').addClass('visible').removeClass('notvisible');
-        // }else{
-        //     // alertMessage('Elija una capa','warning');
-        //     $('#btn_searchadvanced').addClass('notvisible').removeClass('visible');
-        //     $('#cmb_fields').html('<option value="">-- Primero elija una capa --</option>');
-
-        // }
-        // $('#cmb_fields').html(cmb);
     });
 
     $('#wg_search_advanced').on('change', '#cmb_fields', function (e) {    
@@ -188,7 +158,6 @@ define([
      * lleno __query
      * utilizo __queryindex 
      */
-    // $("#btn_addfilter").on('click',function (e) { 
     $('#wg_search_advanced').on('click', '#btn_addfilter', function (e) {    
             e.preventDefault();
         
@@ -226,8 +195,6 @@ define([
                 </tr>`;
                 
             $('#tbody_filter').append(cadena);
-            // $('#txt_filter').val('');
-            // $('#cmb_fields').prop('selectedIndex',0);
         }else{
             alertMessage('Seleccione un campo o escriba un filtro','warning');
         }
@@ -376,7 +343,6 @@ define([
 
 
     // Evento lanzado para limpiar toda la operación
-    // $("#btn_clearsearchadvanced").click(function (e){
     $("#wg_search_advanced").on('click', '#btn_clearsearchadvanced', function (e) {    
         $('#cmb_sector').prop('selectedIndex',0);
         Helper.hideGrid();
@@ -395,7 +361,6 @@ define([
     })
 
     // Evento lanzado para mostrar/ocultar div ubigeo
-    // $("#btn_toggleubigeo").click(function (e){
     $("#wg_search_advanced").on('click', '#btn_toggleubigeo', function (e) {        
         $('#btn_toggleubigeo').toggleClass('icon-chevron-down icon-chevron-up');
         $('#container_ubigeo').toggle(100);
@@ -414,20 +379,6 @@ define([
             idtable='#tbl_searchadvanced', 
             isexportable=true, 
             nquery=__query.length;
-
-        // // formación del sql 
-        // for (let i = 0; i < nquery; i++) {
-        //     let item = __query[i],
-        //         filter = item.filter.toUpperCase(),
-        //         typedata=item.typedata,
-        //         auxsql='';
-        
-        //         if(item.option=='--'){
-        //         item.condition=='contiene' ? sql +=`and Upper(${item.fieldname}) like '%${filter}%'` : sql=`Upper(${item.fieldname}) ${item.condition} '${filter}'`;
-        //     }else{
-        //         item.condition=='contiene' ? sql += `${item.option} Upper(${item.fieldname}) like '%${filter}%'` : sql+= `${item.option} Upper(${item.fieldname}) ${item.condition} '${filter}'`;
-        //     };
-        // }
 
         // formación del sql 
         for (let i = 0; i < nquery; i++){
@@ -572,22 +523,6 @@ define([
     // extraer los features layer desde el objeto Visor
     function extraerlayer(layers, padres, hassublayers, nivelcero, resultado) {
         if(!hassublayers){
-            // let fields=[]; 
-            // if (layers.popupTemplate != null) {
-            //     let aux_fields = layers.popupTemplate.fieldInfos;
-            //     for (let i = 0; i < aux_fields.length; i++) {
-            //         let field = aux_fields[i];
-            //         fields.push({
-            //             'fieldname': field.fieldName,
-            //             'fieldlabel': field.label
-            //         });
-            //     }
-            //     resultado.push({
-            //         'titlelayers': padres + '?' + layers.title,
-            //         'service': layers.url,
-            //         'fields': fields
-            //     });
-            // }
             resultado.push({
                 'titlelayers': padres + '?' + layers.title,
                 'service': layers.url,
