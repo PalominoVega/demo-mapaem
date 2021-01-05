@@ -1,0 +1,2 @@
+Proxy php para uso de servicios privados de arcgis
+creado para testear apps de Osinergmin en general, por ello se usará allowedreferers="*" 
