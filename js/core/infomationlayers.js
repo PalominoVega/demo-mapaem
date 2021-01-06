@@ -490,7 +490,6 @@ define([
       $(".grilla").removeClass('min-size').addClass('max-size');
       
       $('#txt_searchinlayer').val('');
-      // $('#txt_searchinlayer').attr({'data-idlayer':idlayer, 'data-uid':event.item.uid, 'data-aliasmil':`${aliasmil}`, 'data-titlereporte':`${sector} / ${grupo} / ${capas.substring(2)}`});
       $('#wg_searchinlayer').removeClass('notvisible').addClass('visible');
       let result = [],
         padres = '',
@@ -646,8 +645,6 @@ define([
         $('#div_btnmaximizadores').hide(400);
         $('#wg_leyend').hide(400);
         
-        // $('#wg_leyend').removeClass('visible').addClass('notvisible');
-
     }else{
 
         $(".btnswitch-2d3d").removeClass('active');
@@ -671,7 +668,6 @@ define([
 
         __map = __globspace.map;
         __view=__globspace.view
-        // __globspace.view.aux_update=true;-
         valor = false;
 
         $(".modo3d").addClass('notvisible').removeClass('visible');
@@ -680,14 +676,8 @@ define([
         if (__gru_aniadido.layers.items.length>0) {
           $('#wg_leyend').show(400);
         }
-        // $('#wg_leyend').addClass('visible').removeClass('notvisible');
     }
     __map.addMany([__globspace._gly_searchadvanced, __globspace._gly_searchinlayer, __globspace._gly_coodxy, __mil_aue, __mil_fep, __mil_mineria, __mil_hidrocarburos, __mil_gasnatural, __mil_electricidad]);
-
-    
-    // if (!valor){
-    //   // __map.addMany([ __gru_aniadido]);
-    // }
 
     __globspace.currentview=__view;
     __globspace.currentmap=__map;

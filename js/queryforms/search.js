@@ -438,7 +438,6 @@ define([
             let _queryt = new QueryTask({url:__url_ubigeo}),
                 _qparams  = new Query(); 
             _qparams.returnGeometry = true;
-            // _qparams.outFields = ["OBJECTID"];
             _qparams.where = __sql_ubigeo;
 
             _queryt.execute(_qparams).then(function(response){

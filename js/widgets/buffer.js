@@ -369,13 +369,9 @@ define([
         aux_count += item.length;
       }
   
-      console.log(aux_count);
-      console.log(auxlength);
-
       for (let i = auxlength - 1; i >= 0; i--) {
         let layer = layersgroup[i];
         let auxlength2 = layer.length;
-        console.log(auxlength2);
         for (let j = auxlength2 - 1; j >= 0; j--) {
           let item = layer[j],
             titletab = item.titlelayers,
@@ -386,7 +382,6 @@ define([
   
           _qparams.geometry = __buffergeometry;
           _qparams.spatialRelationship = "intersects";
-          // _qparams.outFields = ['*'];
           _qparams.where = '1=1';
           _queryt.executeForCount(_qparams).then(function (response) {
             let nreg = response;
@@ -426,8 +421,6 @@ define([
               __url_layerselected = url_servicio;
             }
   
-            console.log(aux_count);
-            
             // activar eventos en tabs -- renderizar los tab y contenido 
             if (aux_count == 1) {
               if (isfirstintersect) {
@@ -473,7 +466,6 @@ define([
 
               // Helper.hidePreloader();
             }
-            console.log(aux_count);
             aux_count--;  
             console.log("query task error \n", error);
           })
@@ -487,7 +479,6 @@ define([
   function getDataIntersected(layer, aux_idtable, idcache) {
     
     let isexportable = true;
-    // (__permisos_others.indexOf('ExportarTabla') != -1)  ? isexportable = true : '';
     
     let url_servicio = layer.urlservicio;
     let titlelayer = 'Área de influencia: \n ' + layer.title; // title del reporte para el exportar

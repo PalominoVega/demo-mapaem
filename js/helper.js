@@ -454,7 +454,6 @@ define([
         _gl_search.removeAll();
         let _queryt = new QueryTask({url: url_servicio}),
         _qparams = new Query();
-        // _qparams.where = "OBJECTID = "+objectid+"";
         _qparams.where = sql;
         _qparams.returnGeometry = true;
         _queryt.execute(_qparams).then(function(response){
